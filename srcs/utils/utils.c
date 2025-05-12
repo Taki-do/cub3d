@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 11:06:16 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/12 16:35:28 by tboulogn         ###   ########.fr       */
+/*   Created: 2025/05/12 13:07:21 by tboulogn          #+#    #+#             */
+/*   Updated: 2025/05/12 17:15:24 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "../../includes/cub3d.h"
 
-# include "../minilibx-linux/mlx.h"
-# include "../libft/libft.h"
-# include "parsing.h"
-# include "utils.h"
-# include <math.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <stdio.h>
+void	*ft_secure_malloc(size_t bytes)
+{
+	void	*ret;
 
-#endif
+	ret = malloc(bytes);
+	if (!ret)
+		ft_putstr_fd("Error with malloc.", 2);
+	return (ret);
+}
+
+void	error_exit(char *msg)
+{
+	ft_putstr_fd("Error\n", 2);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd("\n", 2);
+	exit(EXIT_FAILURE);
+}
