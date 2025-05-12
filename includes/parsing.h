@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:13:28 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/12 17:05:20 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:58:51 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ void	parse_color_line(char *line, t_config *config);
 void	valid_char(char c);
 int		is_player(char c);
 void	check_surroundings(char **map,int y, int x);
-void	validate_map(t_config *config, int x, int y, int player_found);
+void	validate_map(t_config *config);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:30:58 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/12 17:18:33 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/12 17:59:45 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int main(int ac, char **av)
 	if(!lines)
 		error_exit("Failed to read .cub file");
 	parse_config(lines, &config, 0, 0);
-	validate_map(&config, 0, 0, 0);
+	validate_map(&config);
 	printf("Yeaah, you know how to parse!\n");
 	printf("Player at (%d,%d), facing %c\n", config.player_y, config.player_x, config.player_dir);
 	i = 0;
