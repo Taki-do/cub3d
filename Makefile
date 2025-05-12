@@ -24,7 +24,7 @@ bonus: $(LIBFT_LIB) $(OBJ_BONUS)
 	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(PATH_SRC)/*.o
+	rm -rf srcs/raycasting/*.o
 	make -C libft/ clean
 
 fclean: clean
