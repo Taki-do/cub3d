@@ -1,35 +1,34 @@
 NAME = cub3D
-PATH_LIBFT = libft/
-LIBFT_LIB = $(PATH_LIBFT)libft.a
-SRC = 
+LIBFT_LIB = libft/libft.a
+INC_DIR = includes
+SRCS = srcs/raycasting/main.c srcs/raycasting/minilibx.c
 SRC_BONUS = 
-OBJ = $(SRC:.c=.o)
+OBJS = $(SRCS:.c=.o)
 OBJ_BONUS = $(SRC_BONUS:.c=.o)
 CC = gcc
-FLAGS = -Wall -Wextra -Werror
+FLAGS =  -I$(INC_DIR) -Wall -Wextra -Werror
+MLX_FLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm
 
 all: $(LIBFT_LIB) $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) $(FLAGS) $(OBJ) $(LIBFT_LIB) -o $(NAME)
-
-%.o: %.c
-	$(CC) $(FLAGS) -c $< -o $@
+$(NAME): $(OBJS)
+	$(CC) $(FLAGS) $(OBJS) $(MLX_FLAGS) $(LIBFT_LIB) -o $(NAME)
 
 $(LIBFT_LIB):
-	make -C $(PATH_LIBFT)
+	make -C libft/
 
 bonus: $(LIBFT_LIB) $(OBJ_BONUS)
 	$(CC) $(FLAGS) $(OBJ_BONUS) $(LIBFT_LIB) -o $(NAME)
 
+%.o: %.c
+	$(CC) $(FLAGS) -c $< -o $@
+
 clean:
-	/bin/rm -f $(OBJ) $(OBJ_BONUS)
-	make -C $(PATH_LIBFT) clean
+	rm -rf $(PATH_SRC)/*.o
+	make -C libft/ clean
 
 fclean: clean
-	/bin/rm -f $(NAME)
-	make -C $(PATH_LIBFT) fclean
+	rm -f $(NAME)
+	make -C libft/ fclean
 
 re: fclean all
-
-.PHONY: all clean fclean re

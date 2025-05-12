@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   raycasting.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 11:06:16 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/12 11:12:55 by taomalbe         ###   ########.fr       */
+/*   Created: 2025/05/12 11:12:16 by taomalbe          #+#    #+#             */
+/*   Updated: 2025/05/12 11:27:35 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef RAYCASTING_H
+# define RAYCASTING_H
 
-# include "../minilibx-linux/mlx.h"
-# include "../libft/libft.h"
-# include "raycasting.h"
-# include <math.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <stdio.h>
+#include "cub3d.h"
+
+typedef struct s_data
+{
+	void	*mlx;
+	void	*win;
+}   t_data;
+
+void	init_mlx(t_data *data);
 
 #endif
