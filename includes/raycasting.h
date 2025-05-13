@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:12:16 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/12 13:25:08 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:52:40 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,43 @@
 
 # include "cub3d.h"
 
-# define WIDTH 600
-# define HEIGHT 400
+# define WIDTH 64 * 8
+# define HEIGHT 64 * 8
 
-# define PI 3.14159
+# define MAP_SIZE 64
+# define MAP_WIDTH 8
+# define MAP_HEIGHT 8
+
+# define PI 3.1415926535
+# define FOV 60 * (PI / 180) // Conversion radiant
+
+typedef struct s_texture
+{
+	void	*img;
+	void	*addr;
+	int		x;
+	int		y;
+	int		bpp;
+	int		endian;
+	int		line_len;
+}	t_texture;
 
 typedef struct s_data
 {
-	void	*mlx;
-	void	*win;
-	void	*img;
-	float 	posx;
-	float 	posy;
-	float	angle;
-	float	pa;
-	float	pdx;
-	float	pdy;
+	void		*mlx;
+	void		*win;
+	void		*img;
+	t_texture	wall_img;
+	float 		posx;
+	float 		posy;
+	float		pa;
+	float		pdx;
+	float		pdy;
 }   t_data;
 
-int		draw_player(t_data *data);
 int		take_input(int keycode, t_data *data);
+void	draw_3d(t_data *data);
+int get_pixel(t_texture texture, int x, int y);
+void	draw_pixel(t_texture texture, int x, int y, int color);
 
 #endif

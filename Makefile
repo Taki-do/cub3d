@@ -1,7 +1,7 @@
 NAME = cub3D
 LIBFT_LIB = libft/libft.a
 INC_DIR = includes
-SRCS = srcs/raycasting/main.c srcs/raycasting/minilibx.c
+SRCS = srcs/raycasting/main.c srcs/raycasting/minilibx.c srcs/raycasting/pixel_display.c
 SRC_BONUS = 
 OBJS = $(SRCS:.c=.o)
 OBJ_BONUS = $(SRC_BONUS:.c=.o)
