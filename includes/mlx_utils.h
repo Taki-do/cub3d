@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:52:19 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/13 13:00:33 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:05:50 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,19 @@
 # define MLX_UTILS_H
 
 # include "cub3d.h"
+# include "config.h"
+# include "structs.h"
 
-typedef struct s_img
-{
-	void	*img;
-	char	*addr;
-	int		bpp;
-	int		line_len;
-	int		endian;
-	int		width;
-	int		height;
-}	t_img;
+/* ************************************************************************** */
+/*                                 TEXTURING                                  */
+/* ************************************************************************** */
+void	load_texture(void *mlx, char *path, t_img *tex);
+void	load_all_textures(t_data *data);
+void	draw_background(t_data *data, int width, int height);
 
-typedef struct s_date
-{
-	void		*mlx;
-	void		*win;
-	t_img		texture[4];
-	t_img		screen;
-	t_config	config;
-}	t_data;
+/* ************************************************************************** */
+/*                                   WINDOW                                   */
+/* ************************************************************************** */
+void	init_window(t_data *data, int width, int height);
 
 #endif

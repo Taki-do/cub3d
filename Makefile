@@ -1,47 +1,59 @@
-NAME = cub3D
-PATH_LIBFT = libft/
-LIBFT_LIB = $(PATH_LIBFT)libft.a
-SRC_DIR = srcs/
-OBJ_DIR = obj/
-INCLUDE_DIR = includes/
-SRC = $(SRC_DIR)parsing/file_check.c \
+NAME        := cub3D
+
+SRC_DIR     := srcs/
+OBJ_DIR     := obj/
+INCLUDE_DIR := includes/
+
+PATH_LIBFT  := libft/
+LIBFT_LIB   := $(PATH_LIBFT)libft.a
+
+MLX_DIR     := minilibx-linux
+MLX_LIB     := $(MLX_DIR)/libmlx.a
+MLX_FLAGS   := -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+MLX_INCLUDE := -I$(MLX_DIR)
+
+CC          := gcc
+CFLAGS      := -Wall -Wextra -Werror -I$(INCLUDE_DIR) $(MLX_INCLUDE)
+
+SRC := \
+	$(SRC_DIR)hooks/keypress.c \
+	$(SRC_DIR)parsing/file_check.c \
 	$(SRC_DIR)parsing/flood_fill.c \
 	$(SRC_DIR)parsing/map_checking.c \
 	$(SRC_DIR)parsing/parsing_elements.c \
 	$(SRC_DIR)parsing/parsing.c \
+	$(SRC_DIR)rendering/render.c \
+	$(SRC_DIR)rendering/window.c \
 	$(SRC_DIR)utils/free.c \
 	$(SRC_DIR)utils/utils.c \
 	$(SRC_DIR)main.c
-SRC_BONUS = 
-OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-OBJ_BONUS = $(SRC_BONUS:.c=.o)
-CC = gcc
-FLAGS = -Wall -Wextra -Werror -I$(INCLUDE_DIR)
 
-all: $(LIBFT_LIB) $(NAME)
+OBJ := $(SRC:$(SRC_DIR)%=$(OBJ_DIR)%)
+OBJ := $(OBJ:.c=.o)
 
-$(NAME): $(OBJ)
-	$(CC) $(FLAGS) $(OBJ) $(LIBFT_LIB) -o $(NAME)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -c $< -o $@
+all: $(NAME)
 
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
+$(NAME): $(LIBFT_LIB) $(MLX_LIB) $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_LIB) $(MLX_FLAGS) -o $(NAME)
+
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT_LIB):
-	make -C $(PATH_LIBFT)
+	$(MAKE) -C $(PATH_LIBFT)
 
-bonus: $(LIBFT_LIB) $(OBJ_BONUS)
-	$(CC) $(FLAGS) $(OBJ_BONUS) $(LIBFT_LIB) -o $(NAME)
+$(MLX_LIB):
+	$(MAKE) -C $(MLX_DIR)
 
 clean:
-	/bin/rm -rf $(OBJ_DIR) $(OBJ_BONUS)
-	make -C $(PATH_LIBFT) clean
+	$(RM) -r $(OBJ_DIR)
+	$(MAKE) -C $(PATH_LIBFT) clean
 
 fclean: clean
-	/bin/rm -f $(NAME)
-	make -C $(PATH_LIBFT) fclean
+	$(RM) $(NAME)
+	$(MAKE) -C $(PATH_LIBFT) fclean
 
 re: fclean all
 

@@ -1,36 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 13:07:21 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/13 17:15:17 by tboulogn         ###   ########.fr       */
+/*   Created: 2025/05/13 16:59:49 by tboulogn          #+#    #+#             */
+/*   Updated: 2025/05/13 17:00:47 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#ifndef STRUCTS_H
+# define STRUCTS_H
 
-void	*ft_secure_malloc(size_t bytes)
+# include "config.h"
+
+typedef struct s_img
 {
-	void	*ret;
+	void	*img;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+	int		width;
+	int		height;
+}	t_img;
 
-	ret = malloc(bytes);
-	if (!ret)
-		error_exit("Error with malloc");
-	return (ret);
-}
-
-void	error_exit(char *msg)
+typedef struct s_data
 {
-	ft_putstr_fd("Error\n", 2);
-	ft_putstr_fd(msg, 2);
-	ft_putstr_fd("\n", 2);
-	exit(EXIT_FAILURE);
-}
+	void		*mlx;
+	void		*win;
+	t_img		texture[4];
+	t_img		screen;
+	t_config	config;
+}	t_data;
 
-void	init_data(t_data *data)
-{
-	ft_memset(data, 0, sizeof(t_data));
-}
+#endif

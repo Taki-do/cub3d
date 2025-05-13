@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:14:39 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/13 13:28:45 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:24:48 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_window(t_data *data, int width, int height)
 {
-	data->win = mlx_new_window(data->mlx, width, height, "cub3d");
+	data->win = mlx_new_window(data->mlx, width, height, "cub3D");
 	if (!data->win)
 		error_exit("Failed to create window.");
 	data->screen.img = mlx_new_image(data->mlx, width, height);

@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   hook.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 13:07:21 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/13 17:15:17 by tboulogn         ###   ########.fr       */
+/*   Created: 2025/05/13 16:36:53 by tboulogn          #+#    #+#             */
+/*   Updated: 2025/05/13 17:01:52 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#ifndef HOOKS_H
+# define HOOKS_H
 
-void	*ft_secure_malloc(size_t bytes)
-{
-	void	*ret;
+# define KEY_ESC 65307
+# define KEY_W 119
+# define KEY_A 97
+# define KEY_S 115
+# define KEY_D 100
 
-	ret = malloc(bytes);
-	if (!ret)
-		error_exit("Error with malloc");
-	return (ret);
-}
+# include "cub3d.h"
+# include "structs.h"
 
-void	error_exit(char *msg)
-{
-	ft_putstr_fd("Error\n", 2);
-	ft_putstr_fd(msg, 2);
-	ft_putstr_fd("\n", 2);
-	exit(EXIT_FAILURE);
-}
+int	handle_keypress(int keycode, t_data *data);
+int	exit_game(t_data *data);
 
-void	init_data(t_data *data)
-{
-	ft_memset(data, 0, sizeof(t_data));
-}
+#endif
+

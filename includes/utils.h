@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 13:35:57 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/13 10:18:13 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:15:12 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define UTILS_H
 
 # include "cub3d.h"
-# include "parsing.h"
+# include "structs.h"
 # include <error.h>
 
 /* ************************************************************************** */
@@ -28,6 +28,8 @@ void	error_exit(char *msg);
 void	*ft_secure_malloc(size_t bytes);
 void	free_char_tab(char **tab);
 void	free_config(t_config *config);
+void	free_data(t_data *data);
+void	init_data(t_data *data);
 
 /* ************************************************************************** */
 /*                                CHAR HANDLING                               */

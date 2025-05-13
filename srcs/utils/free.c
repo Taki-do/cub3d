@@ -6,11 +6,11 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 14:04:38 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/13 09:53:17 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:14:18 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/utils.h"
+#include "../../includes/cub3d.h"
 
 void	free_char_tab(char **tab)
 {
@@ -43,4 +43,20 @@ void	free_config(t_config *config)
 			free(config->map_lines[i++]);
 		free(config->map_lines);
 	}
+}
+
+void	free_data(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < 4)
+	{
+		if (data->texture[i].img)
+			mlx_destroy_image(data->mlx, data->texture[i].img);
+		i++;
+	}
+	if (data->screen.img)
+		mlx_destroy_image(data->mlx, data->screen.img);
+	free_config(&data->config);
 }

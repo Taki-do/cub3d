@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   keypress.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 13:07:21 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/13 17:15:17 by tboulogn         ###   ########.fr       */
+/*   Created: 2025/05/13 16:24:11 by tboulogn          #+#    #+#             */
+/*   Updated: 2025/05/13 16:47:04 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../../includes/hook.h"
 
-void	*ft_secure_malloc(size_t bytes)
+int	exit_game(t_data *data)
 {
-	void	*ret;
-
-	ret = malloc(bytes);
-	if (!ret)
-		error_exit("Error with malloc");
-	return (ret);
+	free_data(data);
+	exit(EXIT_SUCCESS);
 }
 
-void	error_exit(char *msg)
+int	handle_keypress(int keycode, t_data *data)
 {
-	ft_putstr_fd("Error\n", 2);
-	ft_putstr_fd(msg, 2);
-	ft_putstr_fd("\n", 2);
-	exit(EXIT_FAILURE);
-}
-
-void	init_data(t_data *data)
-{
-	ft_memset(data, 0, sizeof(t_data));
+	if (keycode == KEY_ESC)
+		exit_game(data);
+	return (0);
 }
