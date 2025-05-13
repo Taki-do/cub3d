@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 13:11:53 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/13 11:24:32 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:44:21 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	parse_config(char **lines, t_config *config, int i, int elements_count)
 			break ;
 	}
 	if (elements_count != 6)
-		error_exit("Missing or duplicatre elements.");
+		error_exit("Missing or duplicate elements.");
 	copy_map_lines(&lines[i], config, 0, 0);
 }
 

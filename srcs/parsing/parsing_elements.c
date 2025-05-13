@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:19:01 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/13 11:26:21 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:43:53 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	parse_color_line(char *line, t_config *config)
 
 	tokens = ft_split(line, ' ');
 	if (!tokens || !tokens[0] || !tokens[1] || tokens[2])
-		error_exit("Inalide color line format, should be: X n,n,n");
+		error_exit("Invalide color line format, should be: X n,n,n");
 	rgb = ft_split(tokens[1], ',');
 	if (!rgb || !rgb[0] || !rgb[1] || !rgb[2] || rgb[3])
 		error_exit("Invalide RGB format, should be: n,n,n");
@@ -80,7 +80,7 @@ void	parse_color_line(char *line, t_config *config)
 	else if (ft_strcmp(tokens[0], "C") == 0)
 		config->ceiling_color = combine_rgb(r, g, b);
 	else
-		error_exit("Unknow color identifier. Can only be: F or C");
+		error_exit("Unknown color identifier. Can only be: F or C");
 	free_char_tab(tokens);
 	free_char_tab(rgb);
 }
