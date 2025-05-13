@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:13:28 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/12 17:58:51 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:28:21 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,8 @@
 # define SPACE ' '
 
 # include "cub3d.h"
+# include "config.h"
 # include "utils.h"
-
-typedef struct s_config
-{
-	char	*no_path;
-	char	*so_path;
-	char	*we_path;
-	char	*ea_path;
-	int		floor_color;
-	int		ceiling_color;
-	char	**map_lines;
-	int		map_height;
-	int		map_width;
-	int		player_x;
-	int		player_y;
-	char	player_dir;
-}	t_config;
-
 
 /* ************************************************************************** */
 /*                                    FILE                                    */
@@ -60,11 +44,18 @@ int		combine_rgb(int r, int g, int b);
 void	parse_color_line(char *line, t_config *config);
 
 /* ************************************************************************** */
+/*                                 FLOOD FILL                                 */
+/* ************************************************************************** */
+
+void	flood_fill(char **map, int y, int x);
+char	**dup_map(char **original);
+
+/* ************************************************************************** */
 /*                                     MAP                                    */
 /* ************************************************************************** */
 void	valid_char(char c);
 int		is_player(char c);
 void	check_surroundings(char **map,int y, int x);
-void	validate_map(t_config *config);
+void	validate_map(t_config *config, int x, int y, int player_found);
 
 #endif

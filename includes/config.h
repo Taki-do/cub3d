@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   file_check.c                                       :+:      :+:    :+:   */
+/*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 11:22:55 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/13 11:23:43 by tboulogn         ###   ########.fr       */
+/*   Created: 2025/05/13 10:02:58 by tboulogn          #+#    #+#             */
+/*   Updated: 2025/05/13 10:07:15 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/parsing.h"
+#ifndef CONFIG_H
+# define CONFIG_H
 
-int	check_cub_extension(char *filename)
+typedef struct s_config
 {
-	int	len;
+	char	*no_path;
+	char	*so_path;
+	char	*we_path;
+	char	*ea_path;
+	int		floor_color;
+	int		ceiling_color;
+	char	**map_lines;
+	int		map_height;
+	int		map_width;
+	int		player_x;
+	int		player_y;
+	char	player_dir;
+}	t_config;
 
-	len = ft_strlen(filename);
-	if (len < 5)
-		return (0);
-	return (ft_strncmp(filename + len - 4, ".cub", 4) == 0);
-}
+#endif

@@ -6,30 +6,28 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:30:58 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/12 17:59:45 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:32:32 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-
-
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	char		**lines;
 	t_config	config;
 	int			i;
-	
+
 	if (ac != 2)
 		error_exit("Usage; ./cube3d <file.cub>");
 	if (!check_cub_extension(av[1]))
 		error_exit("Map file has to be .cub format");
 	ft_bzero(&config, sizeof(t_config));
 	lines = read_cub_map(av[1]);
-	if(!lines)
+	if (!lines)
 		error_exit("Failed to read .cub file");
 	parse_config(lines, &config, 0, 0);
-	validate_map(&config);
+	validate_map(&config, 0, -1, 0);
 	printf("Yeaah, you know how to parse!\n");
 	printf("Player at (%d,%d), facing %c\n", config.player_y, config.player_x, config.player_dir);
 	i = 0;
@@ -39,6 +37,6 @@ int main(int ac, char **av)
 		i++;
 	}
 	free_char_tab(lines);
-	free_char_tab(config.map_lines);
+	free_config(&config);
 	return (0);
 }

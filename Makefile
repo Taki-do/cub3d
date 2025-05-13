@@ -5,6 +5,7 @@ SRC_DIR = srcs/
 OBJ_DIR = obj/
 INCLUDE_DIR = includes/
 SRC = $(SRC_DIR)parsing/file_check.c \
+	$(SRC_DIR)parsing/flood_fill.c \
 	$(SRC_DIR)parsing/map_checking.c \
 	$(SRC_DIR)parsing/parsing_elements.c \
 	$(SRC_DIR)parsing/parsing.c \

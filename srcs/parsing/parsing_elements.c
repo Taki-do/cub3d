@@ -6,15 +6,15 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:19:01 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/12 17:44:18 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:26:21 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/parsing.h"
 
-int		check_element_line(char *line)
+int	check_element_line(char *line)
 {
-		return (ft_strncmp(line, "NO ", 3) == 0
+	return (ft_strncmp(line, "NO ", 3) == 0
 		|| ft_strncmp(line, "SO ", 3) == 0
 		|| ft_strncmp(line, "WE ", 3) == 0
 		|| ft_strncmp(line, "EA ", 3) == 0
@@ -38,11 +38,12 @@ void	parse_texture(char *line, t_config *config)
 	else if (ft_strcmp(tokens[0], "EA") == 0)
 		config->ea_path = ft_strdup(tokens[1]);
 	else
-		error_exit("Unknown texture identifier. Can only be : NO, SO, WE and EA");
+		error_exit("Unknown texture identifier."
+			"Can only be : NO, SO, WE and EA");
 	free_char_tab(tokens);
 }
 
-int		parse_rgb_component(char *s)
+int	parse_rgb_component(char *s)
 {
 	int	value;
 
@@ -51,7 +52,8 @@ int		parse_rgb_component(char *s)
 		error_exit("RGB color out of range, should be between 0 and 255");
 	return (value);
 }
-int		combine_rgb(int r, int g, int b)
+
+int	combine_rgb(int r, int g, int b)
 {
 	return ((r << 16) | (g << 8) | b);
 }
@@ -74,9 +76,9 @@ void	parse_color_line(char *line, t_config *config)
 	g = parse_rgb_component(rgb[1]);
 	b = parse_rgb_component(rgb[2]);
 	if (ft_strcmp(tokens[0], "F") == 0)
-		config->floor_color = combine_rgb(r, g , b);
+		config->floor_color = combine_rgb(r, g, b);
 	else if (ft_strcmp(tokens[0], "C") == 0)
-		config->ceiling_color = combine_rgb(r, g , b);
+		config->ceiling_color = combine_rgb(r, g, b);
 	else
 		error_exit("Unknow color identifier. Can only be: F or C");
 	free_char_tab(tokens);

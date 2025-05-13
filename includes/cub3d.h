@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:06:16 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/12 16:35:28 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/13 10:05:18 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../minilibx-linux/mlx.h"
 # include "../libft/libft.h"
+# include "config.h"
 # include "parsing.h"
 # include "utils.h"
 # include <math.h>

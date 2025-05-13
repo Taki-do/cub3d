@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 13:11:53 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/12 17:17:29 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/13 11:24:32 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ char	**read_cub_map(const char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		return (ft_putstr_fd("Map cannot be read", 2), NULL);
-	while ((line = get_next_line(fd)))
+	line = get_next_line(fd);
+	while (line)
 	{
 		tmp = ft_strjoin(content, line);
 		free(content);
 		content = tmp;
 		free(line);
+		line = get_next_line(fd);
 	}
 	lines = ft_split(content, '\n');
 	free(content);
