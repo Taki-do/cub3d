@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:12:16 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/14 15:15:10 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:24:04 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,8 @@ typedef struct s_data
 
 int		take_input(int keycode, t_data *data);
 void	draw_3d(t_data *data);
-int get_pixel(t_texture *texture, int x, int y);
+int 	get_pixel(t_texture *texture, int x, int y);
 void	draw_pixel(t_texture *texture, int x, int y, int color);
-void cast_horizontal(t_data *data, float ra, int *hx, int *hy, float *h_dist);
-void cast_vertical(t_data *data, float ra, int *vx, int *vy, float *v_dist);
-int is_wall(int px, int py);
+int 	is_wall(int px, int py);
 
 #endif

@@ -1,33 +1,21 @@
 NAME = cub3D
-PATH_LIBFT = libft/
-LIBFT_LIB = $(PATH_LIBFT)libft.a
-SRC_DIR = srcs/
-OBJ_DIR = obj/
-INCLUDE_DIR = includes/
-SRC = $(SRC_DIR)parsing/file_check.c \
-	$(SRC_DIR)parsing/flood_fill.c \
-	$(SRC_DIR)parsing/map_checking.c \
-	$(SRC_DIR)parsing/parsing_elements.c \
-	$(SRC_DIR)parsing/parsing.c \
-	$(SRC_DIR)utils/free.c \
-	$(SRC_DIR)utils/utils.c \
-	$(SRC_DIR)main.c
+LIBFT_LIB = libft/libft.a
+INC_DIR = includes
+SRCS = srcs/raycasting/main.c srcs/raycasting/minilibx.c srcs/raycasting/pixel_display.c \
+		srcs/parsing/file_check.c srcs/parsing/flood_fill.c srcs/parsing/map_checking.c \
+		srcs/parsing/parsing_elements.c srcs/parsing/parsing.c srcs/utils/free.c \
+		srcs/utils/utils.c srcs/main.c
 SRC_BONUS = 
-OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+OBJS = $(SRCS:.c=.o)
 OBJ_BONUS = $(SRC_BONUS:.c=.o)
 CC = gcc
-FLAGS = -Wall -Wextra -Werror -I$(INCLUDE_DIR)
+FLAGS =  -I$(INC_DIR) -Wall -Wextra -Werror
+MLX_FLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm
 
 all: $(LIBFT_LIB) $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) $(FLAGS) $(OBJ) $(LIBFT_LIB) -o $(NAME)
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
+$(NAME): $(OBJS)
+	$(CC) $(FLAGS) $(OBJS) $(MLX_FLAGS) $(LIBFT_LIB) -o $(NAME)
 
 $(LIBFT_LIB):
 	make -C libft/
@@ -39,8 +27,8 @@ bonus: $(LIBFT_LIB) $(OBJ_BONUS)
 	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
-	/bin/rm -rf $(OBJ_DIR) $(OBJ_BONUS)
-	make -C $(PATH_LIBFT) clean
+	rm -rf srcs/*/*.o
+	make -C libft/ clean
 
 fclean: clean
 	rm -f $(NAME)

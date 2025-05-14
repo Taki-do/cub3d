@@ -6,11 +6,11 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:14:52 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/14 15:13:29 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:55:02 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/raycasting.h"
+#include "../../includes/cub3d.h"
 
 void	mlx_free(t_data *data)
 {
@@ -19,25 +19,14 @@ void	mlx_free(t_data *data)
 	free(data->mlx);
 }
 
-int map[MAP_HEIGHT][MAP_WIDTH] = {
-	{1,1,1,1,1,1,1,1},
-	{1,0,1,0,0,0,0,1},
-	{1,0,1,0,0,0,0,1},
-	{1,0,1,0,0,0,0,1},
-	{1,0,0,0,0,0,0,1},
-	{1,0,0,0,0,1,0,1},
-	{1,0,0,0,0,0,0,1},
-	{1,1,1,1,1,1,1,1}
-};
-
-int is_wall(int px, int py)
+int is_wall(t_data *data, int px, int py)
 {
 	int mx = px / MAP_SIZE;
 	int my = py / MAP_SIZE;
 
 	if (mx < 0 || mx >= MAP_WIDTH || my < 0 || my >= MAP_HEIGHT)
 		return (1);
-	return (map[my][mx]);
+	return (data->map[my][mx] - '0');
 }
 
 void	draw_3d(t_data *data)
@@ -83,7 +72,7 @@ void	draw_3d(t_data *data)
 		{
 			rx = data->posx + i * cos(ra);
 			ry = data->posy + i * sin(ra);
-			if (is_wall(rx, ry))
+			if (is_wall(data, rx, ry))
 			{
 				hx = rx;
 				hy = ry;

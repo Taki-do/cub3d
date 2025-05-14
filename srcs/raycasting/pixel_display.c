@@ -6,11 +6,11 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 15:26:36 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/14 12:10:56 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:30:55 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/raycasting.h"
+#include "../../includes/cub3d.h"
 
 int get_pixel(t_texture *texture, int x, int y)
 {

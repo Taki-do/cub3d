@@ -6,10 +6,11 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:26:16 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/14 11:26:53 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:25:39 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
 #include "../../includes/raycasting.h"
 
 int	main(void)
@@ -35,3 +36,4 @@ int	main(void)
 	mlx_key_hook(data.win, take_input, &data);
 	mlx_loop(data.mlx);
 }
+*/
