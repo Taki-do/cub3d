@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:06:16 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/12 11:12:55 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:17:36 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # include "../minilibx-linux/mlx.h"
 # include "../libft/libft.h"
-# include "raycasting.h"
+# include "config.h"
+# include "parsing.h"
+# include "utils.h"
 # include <math.h>
 # include <stdlib.h>
 # include <unistd.h>
