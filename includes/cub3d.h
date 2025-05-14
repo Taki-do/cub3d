@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:06:16 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/14 17:54:07 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/14 18:00:43 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,6 @@
 
 # define WIDTH 64 * 8
 # define HEIGHT 64 * 8
-
-# define MAP_SIZE 64
-
-# define MAP_WIDTH 8
-# define MAP_HEIGHT 8
 
 # define PI 3.1415926535
 # define FOV 60 * (PI / 180) // Conversion radiant
@@ -83,6 +78,9 @@ typedef struct s_data
 	float		pdx;
 	float		pdy;
     char        **map;
+    int         map_size;
+    int         map_width;
+    int         map_height;
 }   t_data;
 
 /* ************************************************************************** */

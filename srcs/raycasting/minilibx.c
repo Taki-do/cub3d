@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:14:52 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/14 17:55:02 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/14 18:20:41 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	mlx_free(t_data *data)
 
 int is_wall(t_data *data, int px, int py)
 {
-	int mx = px / MAP_SIZE;
-	int my = py / MAP_SIZE;
+	int mx = px / data->map_size;
+	int my = py / data->map_size;
 
-	if (mx < 0 || mx >= MAP_WIDTH || my < 0 || my >= MAP_HEIGHT)
+	if (mx < 0 || mx >= data->map_width || my < 0 || my >= data->map_height)
 		return (1);
 	return (data->map[my][mx] - '0');
 }
@@ -83,7 +83,7 @@ void	draw_3d(t_data *data)
 		}
 
 		dist = h_dist * cos(ra - data->pa);
-		line_height = (MAP_SIZE * HEIGHT) / dist;
+		line_height = (data->map_size * HEIGHT) / dist;
 		draw_start = (HEIGHT / 2) - (line_height / 2);
 		draw_end = (HEIGHT / 2) + (line_height / 2);
 		
@@ -93,11 +93,11 @@ void	draw_3d(t_data *data)
 			draw_end = HEIGHT;
 
 		if (ra > PI / 2 && ra < 3 * PI / 2)
-			wall_hit_x = fmodf(hx, MAP_SIZE);
+			wall_hit_x = fmodf(hx, data->map_size);
 		else
-			wall_hit_x = fmodf(hy, MAP_SIZE);
+			wall_hit_x = fmodf(hy, data->map_size);
 
-		tex_x = (int)(wall_hit_x * tex_width / MAP_SIZE);
+		tex_x = (int)(wall_hit_x * tex_width / data->map_size);
 		if (tex_x < 0)
 			tex_x = 0;
 		if (tex_x >= tex_width)
@@ -135,13 +135,13 @@ int	take_input(int keycode, t_data *data)
 {
 	if (keycode == 119) // W
 	{
-		data->posx += data->pdx;
-		data->posy += data->pdy;
+		data->posx += data->pdx * 10;
+		data->posy += data->pdy * 10;
 	}
 	else if (keycode == 115) // S
 	{
-		data->posx -= data->pdx;
-		data->posy -= data->pdy;
+		data->posx -= data->pdx * 10;
+		data->posy -= data->pdy * 10;
 	}
 	else if (keycode == 97) // A
 	{

@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:30:58 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/14 17:53:48 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/14 18:23:44 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,26 @@ int	main(int ac, char **av)
 	validate_map(&config, 0, -1, 0);
 	printf("Yeaah, you know how to parse!\n");
 	printf("Player at (%d,%d), facing %c\n", config.player_y, config.player_x, config.player_dir);
+	t_data	data;
 	i = 0;
+	data.map_size = 0;
 	while (config.map_lines[i])
 	{
 		printf("%s\n", config.map_lines[i]);
+		data.map_size += ft_strlen(config.map_lines[i]);
 		i++;
 	}
-	
-	t_data	data;
 	data.map = config.map_lines;
+	printf("data.map_size = %d\n", data.map_size);
+	data.map_height = config.map_height;
+	data.map_width = config.map_width;
 	data.mlx = mlx_init();
 	data.win = mlx_new_window(data.mlx, WIDTH, HEIGHT, "Cub3D");
 	int height = 64;
 	int width = 64;
 	data.image.img = mlx_new_image(data.mlx, WIDTH, HEIGHT);
 	data.image.addr = mlx_get_data_addr(data.image.img, &data.image.bpp, &data.image.line_len, &data.image.endian);
-	data.wall_img.img = mlx_xpm_file_to_image(data.mlx, "wall_bricks_old_64.xpm", &width, &height);
+	data.wall_img.img = mlx_xpm_file_to_image(data.mlx, "doom_wall.xpm", &width, &height);
 	data.wall_img.addr = mlx_get_data_addr(data.wall_img.img, &data.wall_img.bpp, &data.wall_img.line_len, &data.wall_img.endian);
 
 	data.posx = WIDTH / 2;
