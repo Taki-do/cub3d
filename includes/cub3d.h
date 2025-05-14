@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:06:16 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/13 17:02:08 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/14 11:05:10 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "mlx_utils.h"
 # include "utils.h"
 # include "hook.h"
+# include "raycasting.h"
 # include "structs.h"
 # include <math.h>
 # include <stdlib.h>

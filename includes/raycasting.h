@@ -1,46 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   structs.h                                          :+:      :+:    :+:   */
+/*   raycasting.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 16:59:49 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/14 11:37:43 by tboulogn         ###   ########.fr       */
+/*   Created: 2025/05/12 11:12:16 by taomalbe          #+#    #+#             */
+/*   Updated: 2025/05/14 11:35:08 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCTS_H
-# define STRUCTS_H
+#ifndef RAYCASTING_H
+# define RAYCASTING_H
 
-# include "config.h"
+# include "cub3d.h"
 
-typedef struct s_texture
-{
-	void	*img;
-	void	*addr;
-	int		x;
-	int		y;
-	int		bpp;
-	int		width;
-	int		height;
-	int		endian;
-	int		line_len;
-}	t_texture;
+# define WIDTH 64 * 8
+# define HEIGHT 64 * 8
 
-typedef struct s_data
-{
-	void		*mlx;
-	void		*win;
-	void		*img;
-	t_texture	texture[4];
-	t_texture	screen;
-	t_config	config;
-	float		posx;
-	float		posy;
-	float		pa;
-	float		pdx;
-	float		pdy;
-}	t_data;
+# define MAP_SIZE 64
+
+# define PI 3.1415926535
+# define FOV 60 * (PI / 180) // Conversion radiant
+
+void	draw_3d(t_data *data);
+int		get_pixel(t_texture texture, int x, int y);
+void	draw_pixel(t_texture texture, int x, int y, int color);
 
 #endif

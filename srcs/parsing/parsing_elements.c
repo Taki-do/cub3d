@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:19:01 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/13 11:43:53 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/14 09:52:56 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,16 @@ int	check_element_line(char *line)
 
 void	parse_texture(char *line, t_config *config)
 {
+	int		i;
 	char	**tokens;
 
+	i = -1;
+	while (line[++i])
+	{
+		if (!ft_isalpha(line[i]) && line[i] != '.'
+			&& line[i] != '/' && line[i] != ' ')
+			error_exit("Invalid caracter in texture line.");
+	}
 	tokens = ft_split(line, ' ');
 	if (!tokens || !tokens[0] || !tokens[1] || tokens[2])
 		error_exit("Invalid texture line format. Should be: XX xxxx.xpm");
@@ -66,6 +74,7 @@ void	parse_color_line(char *line, t_config *config)
 	int		g;
 	int		b;
 
+	char_check_rgb(line);
 	tokens = ft_split(line, ' ');
 	if (!tokens || !tokens[0] || !tokens[1] || tokens[2])
 		error_exit("Invalide color line format, should be: X n,n,n");

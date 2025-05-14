@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 13:07:21 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/13 17:15:17 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/14 10:28:41 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,17 @@ void	error_exit(char *msg)
 void	init_data(t_data *data)
 {
 	ft_memset(data, 0, sizeof(t_data));
+}
+
+void	char_check_rgb(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+	{
+		if (!ft_isdigit(str[i]) && str[i] !='F'
+			&& str[i] != 'C' && str[i] != ' ' && str[i] != ',')
+			error_exit("Invalid caracter in floor/ceiling lines.");
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:52:19 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/13 17:05:50 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/14 11:37:04 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 /* ************************************************************************** */
 /*                                 TEXTURING                                  */
 /* ************************************************************************** */
-void	load_texture(void *mlx, char *path, t_img *tex);
+void	load_texture(void *mlx, char *path, t_texture *tex);
 void	load_all_textures(t_data *data);
 void	draw_background(t_data *data, int width, int height);
 

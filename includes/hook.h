@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 16:36:53 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/13 17:01:52 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/14 10:52:49 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include "cub3d.h"
 # include "structs.h"
 
-int	handle_keypress(int keycode, t_data *data);
+int	take_input(int keycode, t_data *data);
 int	exit_game(t_data *data);
 
 #endif
