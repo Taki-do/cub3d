@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:14:52 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/13 15:56:44 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:13:29 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ void	mlx_free(t_data *data)
 }
 
 int map[MAP_HEIGHT][MAP_WIDTH] = {
-    {1,1,1,1,1,1,1,1},
-    {1,0,1,0,0,0,0,1},
-    {1,0,1,0,0,0,0,1},
-    {1,0,1,0,0,0,0,1},
-    {1,0,0,0,0,0,0,1},
-    {1,0,0,0,0,1,0,1},
-    {1,0,0,0,0,0,0,1},
-    {1,1,1,1,1,1,1,1}
+	{1,1,1,1,1,1,1,1},
+	{1,0,1,0,0,0,0,1},
+	{1,0,1,0,0,0,0,1},
+	{1,0,1,0,0,0,0,1},
+	{1,0,0,0,0,0,0,1},
+	{1,0,0,0,0,1,0,1},
+	{1,0,0,0,0,0,0,1},
+	{1,1,1,1,1,1,1,1}
 };
 
 int is_wall(int px, int py)
@@ -42,55 +42,105 @@ int is_wall(int px, int py)
 
 void	draw_3d(t_data *data)
 {
-	int		num_rays; //nombre de rayon
-	float	step_angle; //donne la distance qui separe les rayons
-	float	ra; //angle de rotation
-	int		rx;
-	int		ry;
-	int		r;
-	int		i;
-	int		y;
+	int	num_rays;
+	int	hx;
+	int	hy;
+	int	rx;
+	int	ry;
+	int	r;
+	int	i;
+	int	line_height;
+	int	draw_start;
+	int	draw_end;
+	int	tex_width;
+	int	tex_height;
+	int	tex_x;
+	float	step_angle;
+	float	h_dist;
 	float	dist;
-	int line_height;
-	int draw_start;
-	int draw_end;
+	float	wall_hit_x;
+	float	ra;
 
-	mlx_clear_window(data->mlx, data->win);
-	
-	num_rays = WIDTH / 8;
-	step_angle = FOV / num_rays;
+	num_rays = WIDTH;
 	r = 0;
-	while (r++ < num_rays)
+	tex_height = 64;
+	tex_width = 64;
+	step_angle = FOV / (float)num_rays;
+	mlx_clear_window(data->mlx, data->win);
+	while (r < num_rays)
 	{
-		ra = data->pa - (FOV / 2) + r * step_angle; //angle de gauche a droite 
-		// Reste dans le cercle trigo
+		ra = data->pa - (FOV / 2) + r * step_angle;
 		if (ra < 0)
 			ra += 2 * PI;
 		if (ra > 2 * PI)
 			ra -= 2 * PI;
-		// Ray stepping
+
+		hx = data->posx;
+		hy = data->posy;
+		h_dist = 0;
 		i = 0;
-		while (i++ < 1000)
+		while (i < 1000)
 		{
-			// defini la position x et y du rayon dans un plan 2D
 			rx = data->posx + i * cos(ra);
 			ry = data->posy + i * sin(ra);
 			if (is_wall(rx, ry))
 			{
-				dist = i; // Ajuste la vrai distance, + c'est court en distance + le mur va paraitre grand
-				dist = dist * cos(ra - data->pa); // Calcul hauteur du mur (proche = grand, loin = petit)
-				line_height = (MAP_SIZE * HEIGHT) / dist;
-				draw_start = (HEIGHT / 2) - (line_height / 2);
-				draw_end = (HEIGHT / 2) + (line_height / 2);
-				y = draw_start;
-				while (y++ < draw_end)
-					mlx_pixel_put(data->mlx, data->win, r * 8, y, 0xFF0000);
+				hx = rx;
+				hy = ry;
+				h_dist = i;
 				break;
 			}
+			i++;
 		}
-	}
-}
 
+		dist = h_dist * cos(ra - data->pa);
+		line_height = (MAP_SIZE * HEIGHT) / dist;
+		draw_start = (HEIGHT / 2) - (line_height / 2);
+		draw_end = (HEIGHT / 2) + (line_height / 2);
+		
+		if (draw_start < 0)
+			draw_start = 0;
+		if (draw_end > HEIGHT)
+			draw_end = HEIGHT;
+
+		if (ra > PI / 2 && ra < 3 * PI / 2)
+			wall_hit_x = fmodf(hx, MAP_SIZE);
+		else
+			wall_hit_x = fmodf(hy, MAP_SIZE);
+
+		tex_x = (int)(wall_hit_x * tex_width / MAP_SIZE);
+		if (tex_x < 0)
+			tex_x = 0;
+		if (tex_x >= tex_width)
+			tex_x = tex_width - 1;
+
+		i = 0;
+		while (i < draw_start)
+		{
+			draw_pixel(&data->image, r, i, 0x87CEEB);
+			i++;
+		}
+		
+		i = draw_start;
+		while (i < draw_end)
+		{
+			int d = i * 256 - HEIGHT * 128 + line_height * 128;
+			int tex_y = ((d * tex_height) / line_height) / 256;
+
+			draw_pixel(&data->image, r, i, get_pixel(&data->wall_img, tex_x, tex_y));
+			i++;
+		}
+		
+		i = draw_end;
+		while (i < HEIGHT)
+		{
+			draw_pixel(&data->image, r, i, 0x333333);
+			i++;
+		}
+		r++;
+	}
+	mlx_put_image_to_window(data->mlx, data->win, data->image.img, 0, 0);
+}
 
 int	take_input(int keycode, t_data *data)
 {
