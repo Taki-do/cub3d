@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 11:06:16 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/14 18:00:43 by taomalbe         ###   ########.fr       */
+/*   Created: 2025/05/15 09:20:02 by taomalbe          #+#    #+#             */
+/*   Updated: 2025/05/15 15:52:47 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,35 +22,10 @@
 # include <stdio.h>
 # include <error.h>
 
-# define EMPTY '0'
-# define WALL '1'
-# define NORTH 'N'
-# define SOUTH 'S'
-# define EAST 'E'
-# define WEST 'W'
-# define SPACE ' '
-
-# define WIDTH 64 * 8
-# define HEIGHT 64 * 8
-
-# define PI 3.1415926535
-# define FOV 60 * (PI / 180) // Conversion radiant
-
-typedef struct s_config
-{
-	char	*no_path;
-	char	*so_path;
-	char	*we_path;
-	char	*ea_path;
-	int		floor_color;
-	int		ceiling_color;
-	char	**map_lines;
-	int		map_height;
-	int		map_width;
-	int		player_x;
-	int		player_y;
-	char	player_dir;
-}	t_config;
+# define WIDTH 600
+# define HEIGHT 480
+# define FLOOR_COLOR 0x333333
+# define CELLING_COLOR 0x87CEEB
 
 typedef struct s_texture
 {
@@ -65,78 +40,56 @@ typedef struct s_texture
 	int		height;
 }	t_texture;
 
+typedef struct s_keys
+{
+    int w;
+    int a;
+    int s;
+    int d;
+    int left;
+    int right;
+}   t_keys;
+
 typedef struct s_data
 {
-	void		*mlx;
-	void		*win;
-	void		*img;
-	t_texture	wall_img;
-	t_texture	image;
-	float 		posx;
-	float 		posy;
-	float		pa;
-	float		pdx;
-	float		pdy;
-    char        **map;
-    int         map_size;
-    int         map_width;
-    int         map_height;
+    t_texture   wall[4];
+    t_texture   image;
+    t_keys      keys;
+    void    *mlx;
+    void    *win;
+    double	posX;
+    double  posY;
+	double	dirX;
+    double  dirY;
+	double	planeX;
+    double  planeY;
+    double CameraX;
+	double rayDirX;
+	double rayDirY;
+	//dans quel carre de la map somme nous
+	int		mapX;
+	int		mapY;
+	//taille du rayon de notre position jusqu'a la bordure du prochain carre
+	double sideDistX;
+    double sideDistY;
+	//taille du rayon du carre actuel jusqu'a la bordure du prochain carre
+	double deltaDistX;
+	double deltaDistY;
+	double prepWallDist; //to calculate lenght of the ray
+	//la distance a faire pour passer au prochain carre
+	int		stepX;
+	int		stepY;
+	int		hit; //un mur a ete touche ?
+	int		side; //c'etait au N S ou E W ?
+	int		lineHeight;
+	int		drawStart;
+	int		drawEnd;
 }   t_data;
-
-/* ************************************************************************** */
-/*                                    FILE                                    */
-/* ************************************************************************** */
-int		check_cub_extension(char *filename);
-char	**read_cub_map(const char *filename);
-int		check_empty_line(char *line);
-void	parse_config(char **lines, t_config *config, int i, int elements_count);
-void	copy_map_lines(char **map_start, t_config *config, int height, int max_width);
-
-/* ************************************************************************** */
-/*                                  ELEMENTS                                  */
-/* ************************************************************************** */
-int		check_element_line(char *line);
-void	parse_texture(char *line, t_config *config);
-int		parse_rgb_component(char *s);
-int		combine_rgb(int r, int g, int b);
-void	parse_color_line(char *line, t_config *config);
-
-/* ************************************************************************** */
-/*                                 FLOOD FILL                                 */
-/* ************************************************************************** */
-
-void	flood_fill(char **map, int y, int x);
-char	**dup_map(char **original);
-
-/* ************************************************************************** */
-/*                                     MAP                                    */
-/* ************************************************************************** */
-void	valid_char(char c);
-int		is_player(char c);
-void	check_surroundings(char **map,int y, int x);
-void	validate_map(t_config *config, int x, int y, int player_found);
-
-int		take_input(int keycode, t_data *data);
-void	draw_3d(t_data *data);
-int 	get_pixel(t_texture *texture, int x, int y);
+//[textures.c]
+int     get_pixel(t_texture *texture, int x, int y);
 void	draw_pixel(t_texture *texture, int x, int y, int color);
-int     is_wall(t_data *data, int px, int py);
 
-/* ************************************************************************** */
-/*                               EXIT AND ERROR                               */
-/* ************************************************************************** */
-void	error_exit(char *msg);
-
-/* ************************************************************************** */
-/*                              MEMORY MANAGEMENT                             */
-/* ************************************************************************** */
-void	*ft_secure_malloc(size_t bytes);
-void	free_char_tab(char **tab);
-void	free_config(t_config *config);
-
-/* ************************************************************************** */
-/*                                CHAR HANDLING                               */
-/* ************************************************************************** */
-void	replace_tabs(char *line);
+//[cub3d.c]
+int	render(t_data *data);
 
 #endif
