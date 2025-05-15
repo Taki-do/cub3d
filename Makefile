@@ -1,34 +1,64 @@
-NAME = cub3D
-LIBFT_LIB = libft/libft.a
-INC_DIR = includes
-SRCS = srcs/cub3d.c srcs/textures.c
-SRC_BONUS = 
-OBJS = $(SRCS:.c=.o)
-OBJ_BONUS = $(SRC_BONUS:.c=.o)
-CC = gcc
-FLAGS =  -I$(INC_DIR) -Wall -Wextra -Werror
-MLX_FLAGS = -Lminilibx-linux -lmlx -lXext -lX11 -lm
+NAME        := cub3D
 
-all: $(LIBFT_LIB) $(NAME)
+SRC_DIR     := srcs/
+OBJ_DIR     := obj/
+INCLUDE_DIR := includes/
 
-$(NAME): $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) $(MLX_FLAGS) $(LIBFT_LIB) -o $(NAME)
+PATH_LIBFT  := libft/
+LIBFT_LIB   := $(PATH_LIBFT)libft.a
+
+MLX_DIR     := minilibx-linux
+MLX_LIB     := $(MLX_DIR)/libmlx.a
+MLX_FLAGS   := -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+MLX_INCLUDE := -I$(MLX_DIR)
+
+CC          := gcc
+CFLAGS      := -Wall -Wextra -Werror -I$(INCLUDE_DIR) $(MLX_INCLUDE)
+
+SRC := \
+	$(SRC_DIR)hooks/keypress.c \
+	$(SRC_DIR)parsing/file_check.c \
+	$(SRC_DIR)parsing/flood_fill.c \
+	$(SRC_DIR)parsing/map_checking.c \
+	$(SRC_DIR)parsing/parsing_elements.c \
+	$(SRC_DIR)parsing/parsing.c \
+	$(SRC_DIR)parsing/side_functions.c \
+	$(SRC_DIR)rendering/render.c \
+	$(SRC_DIR)rendering/window.c \
+	$(SRC_DIR)utils/free.c \
+	$(SRC_DIR)utils/utils.c \
+	$(SRC_DIR)main.c
+
+OBJ := $(SRC:$(SRC_DIR)%=$(OBJ_DIR)%)
+OBJ := $(OBJ:.c=.o)
+
+
+all: $(NAME)
+
+$(NAME): $(LIBFT_LIB) $(MLX_LIB) $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_LIB) $(MLX_FLAGS) -o $(NAME)
+
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT_LIB):
-	make -C libft/
+	$(MAKE) -C $(PATH_LIBFT)
 
-bonus: $(LIBFT_LIB) $(OBJ_BONUS)
-	$(CC) $(FLAGS) $(OBJ_BONUS) $(LIBFT_LIB) -o $(NAME)
+$(MLX_LIB):
+	$(MAKE) -C $(MLX_DIR)
 
 %.o: %.c
 	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
-	rm -rf srcs/*.o
-	make -C libft/ clean
+	$(RM) -r $(OBJ_DIR)
+	$(MAKE) -C $(PATH_LIBFT) clean
 
 fclean: clean
-	rm -f $(NAME)
-	make -C libft/ fclean
+	$(RM) $(NAME)
+	$(MAKE) -C $(PATH_LIBFT) fclean
 
 re: fclean all
+
+.PHONY: all clean fclean re
