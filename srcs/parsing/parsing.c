@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/parsing.h"
+#include "../../includes/utils.h"
 
 static void	process_line(t_list **line_list, char *line, int *line_count)
 {

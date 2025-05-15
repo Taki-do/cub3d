@@ -52,11 +52,11 @@ void	free_data(t_data *data)
 	i = 0;
 	while (i < 4)
 	{
-		if (data->texture[i].img)
-			mlx_destroy_image(data->mlx, data->texture[i].img);
+		if (data->wall[i].img)
+			mlx_destroy_image(data->mlx, data->wall[i].img);
 		i++;
 	}
-	if (data->screen.img)
-		mlx_destroy_image(data->mlx, data->screen.img);
+	if (data->image.img)
+		mlx_destroy_image(data->mlx, data->image.img);
 	free_config(&data->config);
 }

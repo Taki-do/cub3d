@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/parsing.h"
+#include "../../includes/utils.h"
 
 int	check_element_line(char *line)
 {
@@ -31,8 +32,11 @@ void	parse_texture(char *line, t_config *config)
 	while (line[++i])
 	{
 		if (!ft_isalpha(line[i]) && line[i] != '.'
-			&& line[i] != '/' && line[i] != ' ')
-			error_exit("Invalid caracter in texture line.");
+			&& line[i] != '/' && line[i] != ' ' && line[i] != '_' && line[i] != '\0')
+		{
+			printf("previous char %c\n", line[i - 1]);
+			error_exit("Invalid character in texture line.");
+		}
 	}
 	tokens = ft_split(line, ' ');
 	if (!tokens || !tokens[0] || !tokens[1] || tokens[2])

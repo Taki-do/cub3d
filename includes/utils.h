@@ -14,8 +14,6 @@
 # define UTILS_H
 
 # include "cub3d.h"
-# include "structs.h"
-# include <error.h>
 
 /* ************************************************************************** */
 /*                               EXIT AND ERROR                               */

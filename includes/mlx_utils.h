@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_utils.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:52:19 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/14 11:37:04 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/15 19:03:23 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define MLX_UTILS_H
 
 # include "cub3d.h"
-# include "config.h"
-# include "structs.h"
 
 /* ************************************************************************** */
 /*                                 TEXTURING                                  */

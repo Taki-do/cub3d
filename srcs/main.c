@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/parsing.h"
+#include "../includes/utils.h"
+#include "../includes/mlx_utils.h"
 
 int	main(int ac, char **av)
 {
@@ -37,11 +39,15 @@ int	main(int ac, char **av)
 		error_exit("Failed to init MLX");
 	}
 	load_all_textures(&data);
-	init_window(&data, WIN_WIDTH, WIN_HEIGHT);
-	draw_background(&data, WIN_WIDTH, WIN_HEIGHT);
-	mlx_put_image_to_window(data.mlx, data.win, data.screen.img, 0, 0);
-	mlx_hook(data.win, 2, 1L << 0, take_input, &data);
-	mlx_hook(data.win, 17, 0, exit_game, &data);
+	init_keys(&data);
+	init_position(&data, 'O'); //found the real one
+	data.posX = data.config.player_x;
+	data.posY = data.config.player_y;
+	init_window(&data, WIDTH, HEIGHT);
+	render(&data);
+	mlx_loop_hook(data.mlx, control_input, &data);
+	mlx_hook(data.win, 2, 1L<<0, on_press, &data);
+	mlx_hook(data.win, 3, 1L<<1, on_release, &data);
 	mlx_loop(data.mlx);
 	free_char_tab(lines);
 	free_data(&data);

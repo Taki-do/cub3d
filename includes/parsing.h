@@ -22,8 +22,6 @@
 # define SPACE ' '
 
 # include "cub3d.h"
-# include "config.h"
-# include "utils.h"
 
 /* ************************************************************************** */
 /*                                    FILE                                    */
@@ -64,5 +62,6 @@ void	validate_map(t_config *config, int x, int y, int player_found);
 void	char_check_rgb(char *str);
 int		process_element(char *line, t_config *config);
 
+void	*ft_secure_malloc(size_t bytes);
 
 #endif

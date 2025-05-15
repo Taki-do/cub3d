@@ -16,13 +16,16 @@ CC          := gcc
 CFLAGS      := -Wall -Wextra -Werror -I$(INCLUDE_DIR) $(MLX_INCLUDE)
 
 SRC := \
-	$(SRC_DIR)hooks/keypress.c \
 	$(SRC_DIR)parsing/file_check.c \
 	$(SRC_DIR)parsing/flood_fill.c \
 	$(SRC_DIR)parsing/map_checking.c \
 	$(SRC_DIR)parsing/parsing_elements.c \
 	$(SRC_DIR)parsing/parsing.c \
 	$(SRC_DIR)parsing/side_functions.c \
+	$(SRC_DIR)raycasting/cub3d.c \
+	$(SRC_DIR)raycasting/init.c \
+	$(SRC_DIR)raycasting/input.c \
+	$(SRC_DIR)raycasting/textures.c \
 	$(SRC_DIR)rendering/render.c \
 	$(SRC_DIR)rendering/window.c \
 	$(SRC_DIR)utils/free.c \

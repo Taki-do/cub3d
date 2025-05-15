@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hook.h                                             :+:      :+:    :+:   */
+/*   file_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 16:36:53 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/15 19:29:46 by taomalbe         ###   ########.fr       */
+/*   Created: 2025/05/12 11:22:55 by tboulogn          #+#    #+#             */
+/*   Updated: 2025/05/15 19:27:23 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HOOKS_H
-# define HOOKS_H
+#include "../../includes/parsing.h"
 
-# define KEY_ESC 65307
-# define KEY_W 119
-# define KEY_A 97
-# define KEY_S 115
-# define KEY_D 100
+int	check_cub_extension(char *filename)
+{
+	int	len;
 
-# include "cub3d.h"
-
-int	take_input(int keycode, t_data *data);
-int	exit_game(t_data *data);
-
-#endif
-
+	len = ft_strlen(filename);
+	if (len < 5)
+		return (0);
+	return (ft_strncmp(filename + len - 4, ".cub", 4) == 0);
+}

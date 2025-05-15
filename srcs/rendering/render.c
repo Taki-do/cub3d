@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:02:50 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/15 13:38:42 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/15 19:09:09 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	load_texture(void *mlx, char *path, t_texture *tex)
 
 void	load_all_textures(t_data *data)
 {
-	load_texture(data->mlx, data->config.no_path, &data->texture[0]);
-	load_texture(data->mlx, data->config.so_path, &data->texture[1]);
-	load_texture(data->mlx, data->config.we_path, &data->texture[2]);
-	load_texture(data->mlx, data->config.ea_path, &data->texture[3]);
+	load_texture(data->mlx, data->config.no_path, &data->wall[0]);
+	load_texture(data->mlx, data->config.so_path, &data->wall[1]);
+	load_texture(data->mlx, data->config.we_path, &data->wall[2]);
+	load_texture(data->mlx, data->config.ea_path, &data->wall[3]);
 }
 
 void	draw_background(t_data *data, int width, int height)
@@ -51,8 +51,8 @@ void	draw_background(t_data *data, int width, int height)
 			color = color_floor;
 		while (x < width)
 		{
-			dst = data->screen.addr + (y *data->screen.line_len
-				+ x * (data->screen.bpp / 8));
+			dst = data->image.addr + (y *data->image.line_len
+				+ x * (data->image.bpp / 8));
 			*(unsigned int *)dst = color;
 			x++;
 		}

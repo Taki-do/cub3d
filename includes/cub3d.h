@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:20:02 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/15 18:56:23 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/15 19:38:22 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,7 @@
 
 # include "../minilibx-linux/mlx.h"
 # include "../libft/libft.h"
-# include "config.h"
-# include "parsing.h"
-# include "mlx_utils.h"
-# include "utils.h"
-# include "hook.h"
-# include "raycasting.h"
-# include "structs.h"
+
 # include <math.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -36,6 +30,23 @@
 # define HEIGHT 480
 # define FLOOR_COLOR 0x333333
 # define CELLING_COLOR 0x87CEEB
+
+typedef struct s_config
+{
+	char	*no_path;
+	char	*so_path;
+	char	*we_path;
+	char	*ea_path;
+	int		floor_color;
+	int		ceiling_color;
+	char	**map_lines;
+	int		map_height;
+	int		map_width;
+	int		player_x;
+	int		player_y;
+	char	player_dir;
+}	t_config;
+
 
 typedef struct s_texture
 {
@@ -65,6 +76,7 @@ typedef struct s_data
     t_texture   wall[4];
     t_texture   image;
     t_keys      keys;
+	t_config	config;
     void    *mlx;
     void    *win;
     double	posX;
@@ -101,5 +113,17 @@ void	draw_pixel(t_texture *texture, int x, int y, int color);
 
 //[cub3d.c]
 int	render(t_data *data);
+
+//[raycasting/init.c]
+void	init_keys(t_data *data);
+void	init_position(t_data *data, char dir);
+
+//[raycasting/input.c]
+int	control_input(t_data *data);
+int	on_release(int keycode, t_data *data);
+int	on_press(int keycode, t_data *data);
+
+//[utils/utils.c]
+void	error_exit(char *msg);
 
 #endif
