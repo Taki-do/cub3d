@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:02:50 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/14 14:39:15 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/15 13:38:42 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	load_texture(void *mlx, char *path, t_texture *tex)
 	tex->addr = mlx_get_data_addr(tex->img, &tex->bpp, &tex->line_len, &tex->endian);
 	if (!tex->addr)
 		error_exit("Failed to get texture data.");
-	printf("Loaded %s: %dx%d | bpp: %d | line_len: %d\n", path, tex->width, tex->height, tex->bpp, tex->line_len);
 }
 
 void	load_all_textures(t_data *data)

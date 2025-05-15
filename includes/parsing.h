@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:13:28 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/13 11:28:21 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/15 14:41:17 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 /*                                    FILE                                    */
 /* ************************************************************************** */
 int		check_cub_extension(char *filename);
-char	**read_cub_map(const char *filename);
+char	**read_cub_map(const char *filename, int line_count, int i);
 int		check_empty_line(char *line);
 void	parse_config(char **lines, t_config *config, int i, int elements_count);
 void	copy_map_lines(char **map_start, t_config *config, int height, int max_width);
@@ -57,5 +57,12 @@ void	valid_char(char c);
 int		is_player(char c);
 void	check_surroundings(char **map,int y, int x);
 void	validate_map(t_config *config, int x, int y, int player_found);
+
+/* ************************************************************************** */
+/*                               SIDE FUNCTIONS                               */
+/* ************************************************************************** */
+void	char_check_rgb(char *str);
+int		process_element(char *line, t_config *config);
+
 
 #endif

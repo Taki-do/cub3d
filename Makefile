@@ -22,8 +22,7 @@ SRC := \
 	$(SRC_DIR)parsing/map_checking.c \
 	$(SRC_DIR)parsing/parsing_elements.c \
 	$(SRC_DIR)parsing/parsing.c \
-	$(SRC_DIR)raycasting/minilibx.c \
-	$(SRC_DIR)raycasting/pixel_display.c \
+	$(SRC_DIR)parsing/side_functions.c \
 	$(SRC_DIR)rendering/render.c \
 	$(SRC_DIR)rendering/window.c \
 	$(SRC_DIR)utils/free.c \

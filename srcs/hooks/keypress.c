@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 16:24:11 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/14 11:05:21 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:29:06 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,5 @@ int	take_input(int keycode, t_data *data)
 		mlx_destroy_window(data->mlx, data->win);
 		exit(0);
 	}
-	draw_3d(data);
 	return (0);
 }

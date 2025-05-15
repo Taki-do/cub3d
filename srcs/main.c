@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:30:58 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/14 14:31:08 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/15 14:17:15 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int ac, char **av)
 	if (!check_cub_extension(av[1]))
 		error_exit("Map file has to be .cub format");
 	init_data(&data);
-	lines = read_cub_map(av[1]);
+	lines = read_cub_map(av[1], 0, 0);
 	if (!lines)
 	{
 		free_data(&data);
@@ -39,7 +39,6 @@ int	main(int ac, char **av)
 	load_all_textures(&data);
 	init_window(&data, WIN_WIDTH, WIN_HEIGHT);
 	draw_background(&data, WIN_WIDTH, WIN_HEIGHT);
-	draw_3d(&data);
 	mlx_put_image_to_window(data.mlx, data.win, data.screen.img, 0, 0);
 	mlx_hook(data.win, 2, 1L << 0, take_input, &data);
 	mlx_hook(data.win, 17, 0, exit_game, &data);
