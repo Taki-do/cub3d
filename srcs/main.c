@@ -40,7 +40,7 @@ int	main(int ac, char **av)
 	}
 	load_all_textures(&data);
 	init_keys(&data);
-	init_position(&data, 'O'); //found the real one
+	init_position(&data, data.config.player_dir); //found the real one
 	data.posX = data.config.player_x;
 	data.posY = data.config.player_y;
 	//for (int y = 0; y < data.config.map_height; y++)

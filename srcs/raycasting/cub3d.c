@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:19:43 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/16 11:00:20 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/16 11:13:20 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int	render(t_data *data)
 		int i = 0;
 		while (i < data->drawStart)
 		{
-			draw_pixel(&data->image, x, i, CELLING_COLOR);
+			draw_pixel(&data->image, x, i, data->config.ceiling_color);
 			i++;
 		}
 		i = data->drawStart; //suppr
@@ -154,7 +154,7 @@ int	render(t_data *data)
 		i = data->drawEnd;
 		while (i < HEIGHT)
 		{
-			draw_pixel(&data->image, x, i, FLOOR_COLOR);
+			draw_pixel(&data->image, x, i, data->config.floor_color);
 			i++;
 		}
 		//avoid frame part
