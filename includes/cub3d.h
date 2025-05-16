@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:20:02 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/16 10:28:59 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/16 11:32:37 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void	init_position(t_data *data, char dir);
 int	control_input(t_data *data);
 int	on_release(int keycode, t_data *data);
 int	on_press(int keycode, t_data *data);
+int	mouse_move(int x, int y, t_data *data);
 
 //[utils/utils.c]
 void	error_exit(char *msg);

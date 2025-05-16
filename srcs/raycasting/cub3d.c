@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:19:43 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/16 11:13:20 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/16 11:45:45 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,7 @@ int	render(t_data *data)
 				data->side = 1; //Ouest ou est
 			}
 			if (data->config.map_lines[data->mapY][data->mapX] == '1') // !! Change needed here
-			{
-				//printf("mapX: %d, mapY: %d, char: %c\n", data->mapX, data->mapY, data->config.map_lines[data->mapY][data->mapX]);
 				data->hit = 1;
-			}
 		}
 		//un recule un coup car quand on touche on est dans le mur mais on veut la distance avant le mur
 		//aussi on utilise la distance qui part du camera plan pour eviter le fish eye effect

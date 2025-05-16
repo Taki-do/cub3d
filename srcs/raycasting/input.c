@@ -110,44 +110,16 @@ int	control_input(t_data *data)
 	return (0);
 }
 
-/*
-int	control_input(t_data *data)
+int	mouse_move(int x, int y, t_data *data)
 {
-	double moveSpeed = 0.03f;
-	double rotSpeed = 0.01f;
-	if (data->keys.w)
-	{
-		if(data->config.map_lines[(int)(data->posX + data->dirX * moveSpeed)][(int)(data->posY)] == '0')
-			data->posX += data->dirX * moveSpeed;
-		if(data->config.map_lines[(int)(data->posX)][(int)(data->posY + data->dirY * moveSpeed)] == '0')
-			data->posY += data->dirY * moveSpeed;
-	}
-	//move backwards if no wall behind you
-	if (data->keys.s)
-	{
-		if(data->config.map_lines[(int)(data->posX - data->dirX * moveSpeed)][(int)(data->posY)] == '0')
-			data->posX -= data->dirX * moveSpeed;
-		if(data->config.map_lines[(int)(data->posX)][(int)(data->posY - data->dirY * moveSpeed)] == '0')
-			data->posY -= data->dirY * moveSpeed;
-	}
-	//move to the right
-	if (data->keys.d)
-	{
-		if(data->config.map_lines[(int)(data->posX + data->planeX * moveSpeed)][(int)(data->posY)] == '0')
-			data->posX += data->planeX * moveSpeed;
-		if(data->config.map_lines[(int)(data->posX)][(int)(data->posY + data->planeY * moveSpeed)] == '0')
-			data->posY += data->planeY * moveSpeed;
-	}
-	//move to the left
-	if (data->keys.a)
-	{
-		if(data->config.map_lines[(int)(data->posX - data->planeX * moveSpeed)][(int)(data->posY)] == '0')
-			data->posX -= data->planeX * moveSpeed;
-		if(data->config.map_lines[(int)(data->posX)][(int)(data->posY - data->planeY * moveSpeed)] == '0')
-			data->posY -= data->planeY * moveSpeed;
-			
-	}
-	if (data->keys.left) //fleche gauche
+	static int	last_x = -1;
+	double 		rotSpeed = 0.01f;
+
+	(void)y;
+	if (last_x == 1)
+		last_x = x;
+	int delta_x = x - last_x;
+	if (delta_x > 0) //fleche gauche
 	{
 		double oldDirX = data->dirX;
 		data->dirX = data->dirX * cos(rotSpeed) - data->dirY * sin(rotSpeed);
@@ -156,7 +128,7 @@ int	control_input(t_data *data)
 		data->planeX = data->planeX * cos(rotSpeed) - data->planeY * sin(rotSpeed);
 		data->planeY = oldPlaneX * sin(rotSpeed) + data->planeY * cos(rotSpeed);
 	}
-	if (data->keys.right) //fleche droite
+	if (delta_x < 0) //fleche droite
 	{
 		//both camera direction and camera plane must be rotated
 		double oldDirX = data->dirX;
@@ -166,7 +138,7 @@ int	control_input(t_data *data)
 		data->planeX = data->planeX * cos(-rotSpeed) - data->planeY * sin(-rotSpeed);
 		data->planeY = oldPlaneX * sin(-rotSpeed) + data->planeY * cos(-rotSpeed);
 	}
+	last_x = x;
 	render(data);
 	return (0);
 }
-*/

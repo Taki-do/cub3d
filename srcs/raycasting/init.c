@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:07:09 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/15 19:07:36 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/16 11:53:30 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	init_position(t_data *data, char dir)
 		data->planeX = 0;
 		data->planeY = 0.66;
 	}
-	else if (dir == 'O')
+	else if (dir == 'W')
 	{
 		data->dirX = 1;
 		data->dirY = 0;
