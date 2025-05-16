@@ -39,6 +39,14 @@ void	update_monsters(t_data *data)
 	}
 }
 
+int	mouse_press(int button, int x, int y, t_data *data)
+{
+	(void)x;
+	(void)y;
+	if (button == 1)
+		shoot(data);
+	return (0);
+}
 
 int	on_press(int keycode, t_data *data)
 {

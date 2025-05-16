@@ -162,6 +162,8 @@ int	render(t_data *data)
 	for (int i = 0; i < data->config.monster_count; i++)
 		draw_monster(data, data->config.monster[i]);
 	update_monsters(data);
+	update_gun(data);
+	draw_gun(data, 3);
 	mlx_put_image_to_window(data->mlx, data->win, data->image.img, 0, 0);
 	return (0);
 }

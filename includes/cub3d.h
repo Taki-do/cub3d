@@ -37,7 +37,6 @@ typedef struct s_monster
 	int		frame_timer;
 }	t_monster;
 
-
 typedef struct s_config
 {
 	char	*no_path;
@@ -85,6 +84,9 @@ typedef struct s_data
     t_texture   wall[4];
     t_texture   image;
 	t_texture	monster_texture[2];
+	t_texture	shotgun[3];
+	int			shotgun_frame;
+	int			shotgun_frame_timer;
     t_keys      keys;
 	t_config	config;
 	int			**tab_int;
@@ -138,6 +140,7 @@ int	control_input(t_data *data);
 int	on_release(int keycode, t_data *data);
 int	on_press(int keycode, t_data *data);
 int	mouse_move(int x, int y, t_data *data);
+int	mouse_press(int button, int x, int y, t_data *data);
 
 void	update_monsters(t_data *data);
 
@@ -146,5 +149,10 @@ void	error_exit(char *msg);
 
 //[raycasting/monster.c]
 void draw_monster(t_data *data, t_monster m);
+
+//[raycasting/shotgun.c]
+int	 shoot(t_data *data);
+void update_gun(t_data *data);
+void draw_gun(t_data *data, int scale);
 
 #endif

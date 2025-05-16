@@ -49,6 +49,7 @@ int	main(int ac, char **av)
 	mlx_hook(data.win, 2, 1L<<0, on_press, &data);
 	mlx_hook(data.win, 3, 1L<<1, on_release, &data);
 	mlx_hook(data.win, 6, 1L<<6, mouse_move, &data);
+	mlx_mouse_hook(data.win, mouse_press, &data);
 	mlx_loop(data.mlx);
 	free_char_tab(lines);
 	free_data(&data);
