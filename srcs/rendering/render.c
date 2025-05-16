@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:02:50 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/16 10:31:53 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:59:50 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	load_all_textures(t_data *data)
 	load_texture(data->mlx, data->config.so_path, &data->wall[1]);
 	load_texture(data->mlx, data->config.we_path, &data->wall[2]);
 	load_texture(data->mlx, data->config.ea_path, &data->wall[3]);
+	load_texture(data->mlx, "Cacodemons.xpm", &data->monster_texture[0]);
+	load_texture(data->mlx, "Cacodemons_shoot.xpm", &data->monster_texture[1]);
 }
 
 void	draw_background(t_data *data, int width, int height)

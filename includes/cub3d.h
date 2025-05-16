@@ -28,6 +28,16 @@
 # define FLOOR_COLOR 0x333333
 # define CELLING_COLOR 0x87CEEB
 
+//[BONUS]
+typedef struct s_monster
+{
+	double 	x;
+	double 	y;
+	int		frame;
+	int		frame_timer;
+}	t_monster;
+
+
 typedef struct s_config
 {
 	char	*no_path;
@@ -42,6 +52,8 @@ typedef struct s_config
 	int		player_x;
 	int		player_y;
 	char	player_dir;
+	int		monster_count;
+	t_monster	monster[50];
 }	t_config;
 
 
@@ -72,6 +84,7 @@ typedef struct s_data
 {
     t_texture   wall[4];
     t_texture   image;
+	t_texture	monster_texture[2];
     t_keys      keys;
 	t_config	config;
 	int			**tab_int;
@@ -104,7 +117,11 @@ typedef struct s_data
 	int		lineHeight;
 	int		drawStart;
 	int		drawEnd;
+	int		last_mouse_x;
+	int		ignore_next_mouse;
+	double	zbuffer[WIDTH];
 }   t_data;
+
 //[textures.c]
 int     get_pixel(t_texture *texture, int x, int y);
 void	draw_pixel(t_texture *texture, int x, int y, int color);
@@ -122,7 +139,12 @@ int	on_release(int keycode, t_data *data);
 int	on_press(int keycode, t_data *data);
 int	mouse_move(int x, int y, t_data *data);
 
+void	update_monsters(t_data *data);
+
 //[utils/utils.c]
 void	error_exit(char *msg);
+
+//[raycasting/monster.c]
+void draw_monster(t_data *data, t_monster m);
 
 #endif

@@ -41,7 +41,7 @@ int	render(t_data *data)
 		data->rayDirY = data->dirY + data->planeY * data->CameraX; //le FOV aussi avec 0.66 qui donne la distance de vue (ex: -1, -0.66)
 		data->mapX = (int)data->posX;
 		data->mapY = (int)data->posY;
-		//assign really big number to avoid problems
+		//chiffre enorme pour dire qu'on ne peut pas passer en X ou en Y dans le cas ou l'on va que en X ou en Y
 		if (data->rayDirX == 0)
 			data->deltaDistX = 1e30;
 		else
@@ -51,6 +51,7 @@ int	render(t_data *data)
 		else
 			data->deltaDistY = fabs(1 / data->rayDirY);
 		data->hit = 0;
+		//on regarde dans quelle direction va le rayon stepX et stepY, on calcul les side dist pour savoir le prochain mur en X ou Y
 		if (data->rayDirX < 0)
 		{
 			data->stepX = -1;
@@ -72,6 +73,7 @@ int	render(t_data *data)
 			data->sideDistY = (data->mapY + 1.0 - data->posY) * data->deltaDistY;
 		}
 		//DDA start
+		//on va en X ou Y suivant le plus proche et on decale nos mesure en fonction pour preparer le prochain passage
 		while (data->hit == 0)
 		{
 			if (data->sideDistX < data->sideDistY)
@@ -95,6 +97,7 @@ int	render(t_data *data)
 			data->prepWallDist = data->sideDistX - data->deltaDistX;
 		else
 			data->prepWallDist = data->sideDistY - data->deltaDistY;
+		data->zbuffer[x] = data->prepWallDist; // enregistre la position du mur a chaque colonne (bonus)
 		//on calcule la hauteur de la ligne
 		data->lineHeight = (int)(HEIGHT / data->prepWallDist);
 		//le debut et la fin de la ligne verticale
@@ -154,49 +157,11 @@ int	render(t_data *data)
 			draw_pixel(&data->image, x, i, data->config.floor_color);
 			i++;
 		}
-		//avoid frame part
-		//move forward if no wall in front of you
-		
 		x++;
 	}
+	for (int i = 0; i < data->config.monster_count; i++)
+		draw_monster(data, data->config.monster[i]);
+	update_monsters(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->image.img, 0, 0);
 	return (0);
 }
-
-/*
-int main(void)
-{
-	t_data	data;
-	init_keys(&data);
-	int	width = 64;
-	int	height = 64;
-	
-	init_position(&data, 'O');
-	data.posX = 22;
-	data.posY = 12;
-	
-	//double	time = 0; //current frame
-	//double	oldTime = 0; //previous frame
-
-	//init mlx
-	data.mlx = mlx_init();
-	data.win = mlx_new_window(data.mlx, WIDTH, HEIGHT, "Cub3D");
-	data.image.img = mlx_new_image(data.mlx, WIDTH, HEIGHT);
-	data.image.addr = mlx_get_data_addr(data.image.img, &data.image.bpp, &data.image.line_len, &data.image.endian);
-
-	data.wall[0].img = mlx_xpm_file_to_image(data.mlx, "doom_wall.xpm", &width, &height);
-	data.wall[0].addr = mlx_get_data_addr(data.wall[0].img, &data.wall[0].bpp, &data.wall[0].line_len, &data.wall[0].endian);
-	data.wall[1].img = mlx_xpm_file_to_image(data.mlx, "doom_wall2.xpm", &width, &height);
-	data.wall[1].addr = mlx_get_data_addr(data.wall[1].img, &data.wall[1].bpp, &data.wall[1].line_len, &data.wall[1].endian);
-	data.wall[2].img = mlx_xpm_file_to_image(data.mlx, "doom_wall3.xpm", &width, &height);
-	data.wall[2].addr = mlx_get_data_addr(data.wall[2].img, &data.wall[2].bpp, &data.wall[2].line_len, &data.wall[2].endian);
-	data.wall[3].img = mlx_xpm_file_to_image(data.mlx, "doom_wall4.xpm", &width, &height);
-	data.wall[3].addr = mlx_get_data_addr(data.wall[3].img, &data.wall[3].bpp, &data.wall[3].line_len, &data.wall[3].endian);
-
-	render(&data);
-	mlx_loop_hook(data.mlx, control_input, &data);
-	mlx_hook(data.win, 2, 1L<<0, on_press, &data);
-	mlx_hook(data.win, 3, 1L<<1, on_release, &data);
-	mlx_loop(data.mlx);
-}
-*/

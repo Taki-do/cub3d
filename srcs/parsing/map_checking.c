@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:40:58 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/15 20:09:56 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/16 18:03:04 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	valid_char(char c)
 {
 	if (c != EMPTY && c != WALL && c != NORTH && c != SOUTH
-		&& c != EAST && c != WEST && c != SPACE)
+		&& c != EAST && c != WEST && c != SPACE && c != 'M')
 		error_exit("Invalid character in map.");
 }
 
@@ -25,10 +25,16 @@ int	is_player(char c)
 	return (c == NORTH || c == SOUTH || c == EAST || c == WEST);
 }
 
+int	is_monster(char c)
+{
+	return (c == 'M');
+}
+
 void	validate_map(t_config *config, int x, int y, int player_found)
 {
 	char	**map_copy;
 
+	config->monster_count = 0;
 	while (config->map_lines[++y])
 	{
 		x = 0;
@@ -43,6 +49,14 @@ void	validate_map(t_config *config, int x, int y, int player_found)
 				config->player_y = y;
 				config->player_dir = config->map_lines[y][x];
 				player_found = 1;
+			}
+			if (is_monster(config->map_lines[y][x]))
+			{
+				config->monster[config->monster_count].x = x;
+				config->monster[config->monster_count].y = y;
+				config->monster[config->monster_count].frame = 0;
+				config->monster_count++;
+				config->map_lines[y][x] = '0';
 			}
 			x++;
 		}

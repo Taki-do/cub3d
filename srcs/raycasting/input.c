@@ -12,6 +12,34 @@
 
 #include "../../includes/cub3d.h"
 
+void	update_monsters(t_data *data)
+{
+	double	speed = 0.01;
+	for (int i = 0; i < data->config.monster_count; i++)
+	{
+		t_monster *m = &data->config.monster[i];
+		double dx = data->posX - m->x;
+		double dy = data->posY - m->y;
+		double dist = sqrt(dx * dx + dy * dy);
+		m->frame_timer++;
+		if (m->frame_timer > 100)
+		{
+			m->frame = (m->frame + 1) % 2;
+			m->frame_timer = 0;
+		}
+		if (dist > 1)
+		{
+			double vx = dx / dist;
+			double vy = dy / dist;
+			if (data->config.map_lines[(int)(m->y)][(int)(m->x + vx * speed)] == '0')
+				m->x += vx * speed;
+			if (data->config.map_lines[(int)(m->y + vy * speed)][(int)(m->x)] == '0')
+				m->y += vy * speed;
+		}
+	}
+}
+
+
 int	on_press(int keycode, t_data *data)
 {
 	if (keycode == 119)
@@ -113,13 +141,13 @@ int	control_input(t_data *data)
 int	mouse_move(int x, int y, t_data *data)
 {
 	static int	last_x = -1;
-	double 		rotSpeed = 0.01f;
-
+	double 		rotSpeed = 0.03f;
 	(void)y;
+
 	if (last_x == 1)
 		last_x = x;
 	int delta_x = x - last_x;
-	if (delta_x > 0) //fleche gauche
+	if (delta_x < 0) //fleche gauche
 	{
 		double oldDirX = data->dirX;
 		data->dirX = data->dirX * cos(rotSpeed) - data->dirY * sin(rotSpeed);
@@ -128,7 +156,7 @@ int	mouse_move(int x, int y, t_data *data)
 		data->planeX = data->planeX * cos(rotSpeed) - data->planeY * sin(rotSpeed);
 		data->planeY = oldPlaneX * sin(rotSpeed) + data->planeY * cos(rotSpeed);
 	}
-	if (delta_x < 0) //fleche droite
+	if (delta_x > 0) //fleche droite
 	{
 		//both camera direction and camera plane must be rotated
 		double oldDirX = data->dirX;
