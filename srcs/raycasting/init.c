@@ -45,7 +45,7 @@ void	init_position(t_data *data, char dir)
 		data->planeX = 0;
 		data->planeY = 0.66;
 	}
-	else if (dir == 'O')
+	else if (dir == 'W')
 	{
 		data->dirX = 1;
 		data->dirY = 0;
