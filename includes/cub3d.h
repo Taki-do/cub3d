@@ -6,15 +6,12 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:20:02 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/15 19:38:22 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/16 10:28:59 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
-
-# define WIN_WIDTH 1080
-# define WIN_HEIGHT 720
 
 # include "../minilibx-linux/mlx.h"
 # include "../libft/libft.h"
@@ -77,6 +74,7 @@ typedef struct s_data
     t_texture   image;
     t_keys      keys;
 	t_config	config;
+	int			**tab_int;
     void    *mlx;
     void    *win;
     double	posX;

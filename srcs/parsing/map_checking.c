@@ -6,11 +6,12 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:40:58 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/15 19:27:36 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/15 20:09:56 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/parsing.h"
+#include "../../includes/utils.h"
 
 void	valid_char(char c)
 {

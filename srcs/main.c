@@ -14,6 +14,33 @@
 #include "../includes/utils.h"
 #include "../includes/mlx_utils.h"
 
+void	tab_to_int(t_data *data)
+{
+	int	x;
+	int	y;
+	int	**map_int;
+
+	y = 0;
+	map_int = (int **)malloc(data->config.map_height * sizeof(int *));
+	//secure un jour
+	while (y < data->config.map_height)
+	{
+		x = 0;
+		map_int[y] = (int *)malloc(data->config.map_width * sizeof(int));
+		//secure un jour
+		while (x < data->config.map_width)
+		{
+			if (data->config.map_lines[y][x] == '1')
+				map_int[y][x] = 1;
+			else
+				map_int[y][x] = 0;
+			x++;
+		}
+		y++;
+	}
+	data->tab_int = map_int;
+}
+
 int	main(int ac, char **av)
 {
 	char **lines;
@@ -43,6 +70,10 @@ int	main(int ac, char **av)
 	init_position(&data, 'O'); //found the real one
 	data.posX = data.config.player_x;
 	data.posY = data.config.player_y;
+	tab_to_int(&data);
+	//for (int y = 0; y < data.config.map_height; y++)
+	//	printf("%s\n", data.config.map_lines[y]);
+	//printf("data.config.player_x = %d\ndata.config.player_y = %d\n", data.config.player_x, data.config.player_y);
 	init_window(&data, WIDTH, HEIGHT);
 	render(&data);
 	mlx_loop_hook(data.mlx, control_input, &data);

@@ -25,10 +25,11 @@ int	check_element_line(char *line)
 
 void	parse_texture(char *line, t_config *config)
 {
-	int		i;
+	//int		i;
 	char	**tokens;
 
-	i = -1;
+	//i = -1;
+	/*
 	while (line[++i])
 	{
 		if (!ft_isalpha(line[i]) && line[i] != '.'
@@ -38,6 +39,7 @@ void	parse_texture(char *line, t_config *config)
 			error_exit("Invalid character in texture line.");
 		}
 	}
+		*/
 	tokens = ft_split(line, ' ');
 	if (!tokens || !tokens[0] || !tokens[1] || tokens[2])
 		error_exit("Invalid texture line format. Should be: XX xxxx.xpm");
