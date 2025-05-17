@@ -18,23 +18,26 @@ void	update_monsters(t_data *data)
 	for (int i = 0; i < data->config.monster_count; i++)
 	{
 		t_monster *m = &data->config.monster[i];
-		double dx = data->posX - m->x;
-		double dy = data->posY - m->y;
-		double dist = sqrt(dx * dx + dy * dy);
-		m->frame_timer++;
-		if (m->frame_timer > 100)
+		if (m->hp > 0)
 		{
-			m->frame = (m->frame + 1) % 2;
-			m->frame_timer = 0;
-		}
-		if (dist > 1)
-		{
-			double vx = dx / dist;
-			double vy = dy / dist;
-			if (data->config.map_lines[(int)(m->y)][(int)(m->x + vx * speed)] == '0')
-				m->x += vx * speed;
-			if (data->config.map_lines[(int)(m->y + vy * speed)][(int)(m->x)] == '0')
-				m->y += vy * speed;
+			double dx = data->posX - m->x;
+			double dy = data->posY - m->y;
+			double dist = sqrt(dx * dx + dy * dy);
+			m->frame_timer++;
+			if (m->frame_timer > 100)
+			{
+				m->frame = (m->frame + 1) % 2;
+				m->frame_timer = 0;
+			}
+			if (dist > 1)
+			{
+				double vx = dx / dist;
+				double vy = dy / dist;
+				if (data->config.map_lines[(int)(m->y)][(int)(m->x + vx * speed)] == '0')
+					m->x += vx * speed;
+				if (data->config.map_lines[(int)(m->y + vy * speed)][(int)(m->x)] == '0')
+					m->y += vy * speed;
+			}
 		}
 	}
 }

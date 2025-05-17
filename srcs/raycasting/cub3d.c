@@ -97,7 +97,9 @@ int	render(t_data *data)
 			data->prepWallDist = data->sideDistX - data->deltaDistX;
 		else
 			data->prepWallDist = data->sideDistY - data->deltaDistY;
+
 		data->zbuffer[x] = data->prepWallDist; // enregistre la position du mur a chaque colonne (bonus)
+		
 		//on calcule la hauteur de la ligne
 		data->lineHeight = (int)(HEIGHT / data->prepWallDist);
 		//le debut et la fin de la ligne verticale

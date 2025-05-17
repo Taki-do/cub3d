@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:38:53 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/16 18:11:36 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/17 10:28:55 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,16 @@ void draw_monster(t_data *data, t_monster m)
 
 	int spriteScreenX = (int)((WIDTH / 2) * (1 + transformX / transformY));
 
+    int offset = 0;
+    if (m.hp <= 0)
+    {
+        offset = 40;
+    }
+    
 	int spriteHeight = abs((int)(HEIGHT / transformY));
-	int drawStartY = -spriteHeight / 2 + HEIGHT / 2;
-	int drawEndY = spriteHeight / 2 + HEIGHT / 2;
-
+	int drawStartY = -spriteHeight / 2 + HEIGHT / 2 + offset;
+	int drawEndY = spriteHeight / 2 + HEIGHT / 2 + offset;
+    
 	int spriteWidth = spriteHeight; // carré
 	int drawStartX = -spriteWidth / 2 + spriteScreenX;
 	int drawEndX = spriteWidth / 2 + spriteScreenX;
@@ -43,7 +49,10 @@ void draw_monster(t_data *data, t_monster m)
                     int d = y * 256 - HEIGHT * 128 + spriteHeight * 128;
                     int texY = ((d * 64) / spriteHeight) / 256;
                     int color;
-                    color = get_pixel(&data->monster_texture[m.frame], texX, texY);
+                    if (m.hp <= 0)
+                        color = get_pixel(&data->monster_texture[2], texX, texY);
+                    else
+                        color = get_pixel(&data->monster_texture[m.frame], texX, texY);
                     //Ne pas dessiner transparent
                     if (color != 0x000000)
                         draw_pixel(&data->image, stripe, y, color);
@@ -52,3 +61,39 @@ void draw_monster(t_data *data, t_monster m)
         }
 	}
 }
+
+void check_monster_hit(t_data *data)
+{
+    for (int i = 0; i < data->config.monster_count; i++)
+    {
+        t_monster *m = &data->config.monster[i];
+
+        if (m->hp <= 0)
+            return ;
+
+        double spriteX = m->x - data->posX;
+        double spriteY = m->y - data->posY;
+
+        double invDet = 1.0 / (data->planeX * data->dirY - data->dirX * data->planeY);
+
+        double transformX = invDet * (data->dirY * spriteX - data->dirX * spriteY);
+        double transformY = invDet * (-data->planeY * spriteX + data->planeX * spriteY);
+
+        if (transformY <= 0)
+            return ;
+
+        int spriteScreenX = (int)((WIDTH / 2) * (1 + transformX / transformY));
+
+        int tolerance = 10;
+
+        if (spriteScreenX > WIDTH / 2 - tolerance && spriteScreenX < WIDTH / 2 + tolerance)
+        {
+            if (transformY < data->zbuffer[spriteScreenX])
+            {
+                m->hp -= 1;
+                printf("Monster dead\n");
+            }
+        }
+    }
+}
+

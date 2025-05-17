@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:40:58 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/16 18:03:04 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/17 10:06:15 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	validate_map(t_config *config, int x, int y, int player_found)
 				config->monster[config->monster_count].x = x;
 				config->monster[config->monster_count].y = y;
 				config->monster[config->monster_count].frame = 0;
+				config->monster[config->monster_count].hp = 1;
 				config->monster_count++;
 				config->map_lines[y][x] = '0';
 			}

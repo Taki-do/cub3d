@@ -33,6 +33,7 @@ typedef struct s_monster
 {
 	double 	x;
 	double 	y;
+	int		hp;
 	int		frame;
 	int		frame_timer;
 }	t_monster;
@@ -83,7 +84,7 @@ typedef struct s_data
 {
     t_texture   wall[4];
     t_texture   image;
-	t_texture	monster_texture[2];
+	t_texture	monster_texture[3];
 	t_texture	shotgun[3];
 	int			shotgun_frame;
 	int			shotgun_frame_timer;
@@ -149,6 +150,7 @@ void	error_exit(char *msg);
 
 //[raycasting/monster.c]
 void draw_monster(t_data *data, t_monster m);
+void check_monster_hit(t_data *data);
 
 //[raycasting/shotgun.c]
 int	 shoot(t_data *data);
