@@ -32,7 +32,8 @@ SRC := \
 	$(SRC_DIR)utils/utils.c \
 	$(SRC_DIR)main.c \
 	$(SRC_DIR)raycasting/monsters.c \
-	$(SRC_DIR)raycasting/shotgun.c
+	$(SRC_DIR)raycasting/shotgun.c \
+	$(SRC_DIR)raycasting/door.c
 
 OBJ := $(SRC:$(SRC_DIR)%=$(OBJ_DIR)%)
 OBJ := $(OBJ:.c=.o)

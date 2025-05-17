@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:40:58 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/17 10:06:15 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/17 14:34:05 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	valid_char(char c)
 {
 	if (c != EMPTY && c != WALL && c != NORTH && c != SOUTH
-		&& c != EAST && c != WEST && c != SPACE && c != 'M')
+		&& c != EAST && c != WEST && c != SPACE && c != 'M' && c != 'D')
 		error_exit("Invalid character in map.");
 }
 
@@ -28,6 +28,11 @@ int	is_player(char c)
 int	is_monster(char c)
 {
 	return (c == 'M');
+}
+
+int	is_door(char c)
+{
+	return (c == 'P');
 }
 
 void	validate_map(t_config *config, int x, int y, int player_found)
@@ -58,6 +63,13 @@ void	validate_map(t_config *config, int x, int y, int player_found)
 				config->monster[config->monster_count].hp = 1;
 				config->monster_count++;
 				config->map_lines[y][x] = '0';
+			}
+			if (is_door(config->map_lines[y][x]))
+			{
+				config->door.x = x;
+				config->door.y = y;
+				config->door.frame = 0;
+				config->door.open = 0;
 			}
 			x++;
 		}

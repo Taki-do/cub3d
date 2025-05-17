@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 11:21:55 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/15 19:37:35 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/17 14:58:11 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	flood_fill(char **map, int y, int x)
 		error_exit("Map not closed: open area detected");
 	if (c == '1' || c == 'x')
 		return ;
-	if (c != '0' && !is_player(c))
+	if (c != '0' && !is_player(c) && c != 'D')
 		error_exit("Invalid character inside map during flood fill");
 	map[y][x] = 'x';
 	flood_fill(map, y + 1, x);

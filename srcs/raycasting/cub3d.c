@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:19:43 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/16 11:45:45 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/17 15:06:52 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,15 @@ int	render(t_data *data)
 				data->mapY += data->stepY;
 				data->side = 1; //Ouest ou est
 			}
-			if (data->config.map_lines[data->mapY][data->mapX] == '1') // !! Change needed here
-				data->hit = 1;
+			if ((data->config.map_lines[data->mapY][data->mapX] == '1') ||
+				(data->config.map_lines[data->mapY][data->mapX] == 'D'))
+				{
+					if (data->config.map_lines[data->mapY][data->mapX] == 'D' &&
+						data->config.door.open)
+						data->hit = 0;
+					else
+						data->hit = 1;
+				}
 		}
 		//un recule un coup car quand on touche on est dans le mur mais on veut la distance avant le mur
 		//aussi on utilise la distance qui part du camera plan pour eviter le fish eye effect
@@ -150,7 +157,14 @@ int	render(t_data *data)
 			int tex_y = ((d * 64) / data->lineHeight) / 256;
 			if (data->side == 1)
 				tex_y /= 2; //brightness
-			draw_pixel(&data->image, x, i, get_pixel(&data->wall[texture_nb], texX, tex_y));
+			if (data->config.map_lines[data->mapY][data->mapX] == 'D' &&
+						data->config.door.open)
+				draw_pixel(&data->image, x, i, get_pixel(&data->door[1], texX, tex_y));
+			else if (data->config.map_lines[data->mapY][data->mapX] == 'D' &&
+						!data->config.door.open)
+				draw_pixel(&data->image, x, i, get_pixel(&data->door[0], texX, tex_y));
+			else
+				draw_pixel(&data->image, x, i, get_pixel(&data->wall[texture_nb], texX, tex_y));
 			i++;
 		}
 		i = data->drawEnd;
@@ -163,6 +177,7 @@ int	render(t_data *data)
 	}
 	for (int i = 0; i < data->config.monster_count; i++)
 		draw_monster(data, data->config.monster[i]);
+	update_door(data, &data->config.door);
 	update_monsters(data);
 	update_gun(data);
 	draw_gun(data, 3);

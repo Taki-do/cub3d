@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:20:02 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/16 11:32:37 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/17 15:06:40 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,15 @@
 # define CELLING_COLOR 0x87CEEB
 
 //[BONUS]
+
+typedef struct s_door
+{
+	double 	x;
+	double 	y;
+	int		frame;
+	int		open;
+}	t_door;
+
 typedef struct s_monster
 {
 	double 	x;
@@ -53,6 +62,7 @@ typedef struct s_config
 	int		player_y;
 	char	player_dir;
 	int		monster_count;
+	t_door		door;
 	t_monster	monster[50];
 }	t_config;
 
@@ -86,6 +96,7 @@ typedef struct s_data
     t_texture   image;
 	t_texture	monster_texture[3];
 	t_texture	shotgun[3];
+	t_texture	door[2];
 	int			shotgun_frame;
 	int			shotgun_frame_timer;
     t_keys      keys;
@@ -156,5 +167,8 @@ void check_monster_hit(t_data *data);
 int	 shoot(t_data *data);
 void update_gun(t_data *data);
 void draw_gun(t_data *data, int scale);
+
+//[raycasting/door.c]
+void    update_door(t_data *data, t_door *d);
 
 #endif

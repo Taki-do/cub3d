@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 15:38:53 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/17 10:28:55 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/17 14:23:55 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,13 @@ void draw_monster(t_data *data, t_monster m)
 	double transformY = invDet * (-data->planeY * spriteX + data->planeX * spriteY);
 
 	int spriteScreenX = (int)((WIDTH / 2) * (1 + transformX / transformY));
-
-    int offset = 0;
-    if (m.hp <= 0)
-    {
-        offset = 40;
-    }
     
 	int spriteHeight = abs((int)(HEIGHT / transformY));
-	int drawStartY = -spriteHeight / 2 + HEIGHT / 2 + offset;
-	int drawEndY = spriteHeight / 2 + HEIGHT / 2 + offset;
+	int drawStartY = -spriteHeight / 2 + HEIGHT / 2;
+	int drawEndY = spriteHeight / 2 + HEIGHT / 2;
     
 	int spriteWidth = spriteHeight; // carré
+
 	int drawStartX = -spriteWidth / 2 + spriteScreenX;
 	int drawEndX = spriteWidth / 2 + spriteScreenX;
 
@@ -89,10 +84,7 @@ void check_monster_hit(t_data *data)
         if (spriteScreenX > WIDTH / 2 - tolerance && spriteScreenX < WIDTH / 2 + tolerance)
         {
             if (transformY < data->zbuffer[spriteScreenX])
-            {
                 m->hp -= 1;
-                printf("Monster dead\n");
-            }
         }
     }
 }
