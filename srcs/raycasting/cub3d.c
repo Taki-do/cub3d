@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:19:43 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/18 11:04:18 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/18 11:46:41 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	render(t_data *data)
 				(data->config.map_lines[data->mapY][data->mapX] == 'D'))
 				{
 					if (data->config.map_lines[data->mapY][data->mapX] == 'D' &&
-						data->config.door.open)
+						door_is_open(data))
 						data->hit = 0;
 					else
 						data->hit = 1;
@@ -158,10 +158,10 @@ int	render(t_data *data)
 			if (data->side == 1)
 				tex_y /= 2; //brightness
 			if (data->config.map_lines[data->mapY][data->mapX] == 'D' &&
-						data->config.door.open)
+						door_is_open(data))
 				draw_pixel(&data->image, x, i, get_pixel(&data->door[1], texX, tex_y));
 			else if (data->config.map_lines[data->mapY][data->mapX] == 'D' &&
-						!data->config.door.open)
+						!door_is_open(data))
 				draw_pixel(&data->image, x, i, get_pixel(&data->door[0], texX, tex_y));
 			else
 				draw_pixel(&data->image, x, i, get_pixel(&data->wall[texture_nb], texX, tex_y));
@@ -177,7 +177,7 @@ int	render(t_data *data)
 	}
 	for (int i = 0; i < data->config.monster_count; i++)
 		draw_monster(data, data->config.monster[i]);
-	update_door(data, &data->config.door);
+	update_door(data);
 	update_monsters(data);
 	update_gun(data);
 	draw_gun(data, 3);

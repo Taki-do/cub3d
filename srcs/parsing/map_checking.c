@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:40:58 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/18 11:04:04 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/18 11:48:29 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	validate_map(t_config *config, int x, int y, int player_found)
 	char	**map_copy;
 
 	config->monster_count = 0;
+	config->door_count = 0;
 	while (config->map_lines[++y])
 	{
 		x = 0;
@@ -54,6 +55,7 @@ void	validate_map(t_config *config, int x, int y, int player_found)
 				config->player_y = y;
 				config->player_dir = config->map_lines[y][x];
 				player_found = 1;
+				config->map_lines[y][x] = '0';
 			}
 			if (is_monster(config->map_lines[y][x]))
 			{
@@ -66,10 +68,11 @@ void	validate_map(t_config *config, int x, int y, int player_found)
 			}
 			if (is_door(config->map_lines[y][x]))
 			{
-				config->door.x = x;
-				config->door.y = y;
-				config->door.frame = 0;
-				config->door.open = 0;
+				config->door[config->door_count].x = x;
+				config->door[config->door_count].y = y;
+				config->door[config->door_count].frame = 0;
+				config->door[config->door_count].open = 0;
+				config->door_count++;
 			}
 			x++;
 		}

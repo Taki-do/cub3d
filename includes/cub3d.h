@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:20:02 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/18 11:02:04 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/18 11:46:18 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ typedef struct s_config
 	int		player_y;
 	char	player_dir;
 	int		monster_count;
-	t_door		door;
+	int		door_count;
+	t_door		door[10];
 	t_monster	monster[50];
 }	t_config;
 
@@ -169,6 +170,7 @@ void update_gun(t_data *data);
 void draw_gun(t_data *data, int scale);
 
 //[raycasting/door.c]
-void    update_door(t_data *data, t_door *d);
+void    update_door(t_data *data);
+int door_is_open(t_data *data);
 
 #endif
