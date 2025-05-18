@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:40:58 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/17 14:34:05 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/18 11:04:04 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	is_monster(char c)
 
 int	is_door(char c)
 {
-	return (c == 'P');
+	return (c == 'D');
 }
 
 void	validate_map(t_config *config, int x, int y, int player_found)

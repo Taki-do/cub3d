@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:02:50 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/17 14:56:00 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/18 11:10:25 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ void	load_all_textures(t_data *data)
 	load_texture(data->mlx, "shotgun_frame1.xpm", &data->shotgun[0]);
 	load_texture(data->mlx, "shotgun_frame2.xpm", &data->shotgun[1]);
 	load_texture(data->mlx, "shotgun_frame3.xpm", &data->shotgun[2]);
-	load_texture(data->mlx, "shotgun_frame2.xpm", &data->door[0]);
-	load_texture(data->mlx, "shotgun_frame3.xpm", &data->door[1]);
+	load_texture(data->mlx, "door.xpm", &data->door[0]);
+	load_texture(data->mlx, "door_open.xpm", &data->door[1]);
 }
