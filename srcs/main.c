@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:30:58 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/15 14:17:15 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:37:46 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	main(int ac, char **av)
 	load_all_textures(&data);
 	init_keys(&data);
 	init_position(&data, data.config.player_dir); //found the real one
-	data.posX = data.config.player_x;
-	data.posY = data.config.player_y;
+	data.posx = data.config.player_x;
+	data.posy = data.config.player_y;
 	//for (int y = 0; y < data.config.map_height; y++)
 	//	printf("%s\n", data.config.map_lines[y]);
 	//printf("data.config.player_x = %d\ndata.config.player_y = %d\n", data.config.player_x, data.config.player_y);

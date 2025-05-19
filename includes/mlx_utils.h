@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_utils.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 12:52:19 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/15 19:03:23 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:38:11 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 /* ************************************************************************** */
 void	load_texture(void *mlx, char *path, t_texture *tex);
 void	load_all_textures(t_data *data);
-void	draw_background(t_data *data, int width, int height);
 
 /* ************************************************************************** */
 /*                                   WINDOW                                   */

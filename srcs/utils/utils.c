@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 13:07:21 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/15 14:37:00 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:39:26 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	init_data(t_data *data)
 int	has_tab(char *str)
 {
 	int	i;
-	
+
 	i = -1;
-	while(str[++i])
+	while (str[++i])
 	{
 		if (str[i] == '\t')
 			return (1);

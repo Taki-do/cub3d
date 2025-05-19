@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   hook.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 16:36:53 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/15 19:29:46 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:07:44 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HOOKS_H
-# define HOOKS_H
+#ifndef HOOK_H
+# define HOOK_H
 
 # define KEY_ESC 65307
 # define KEY_W 119
@@ -25,4 +25,3 @@ int	take_input(int keycode, t_data *data);
 int	exit_game(t_data *data);
 
 #endif
-

@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:19:01 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/14 09:52:56 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:11:35 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,16 @@ int	check_element_line(char *line)
 
 void	parse_texture(char *line, t_config *config)
 {
-	//int		i;
+	int		i;
 	char	**tokens;
 
-	//i = -1;
-	/*
+	i = -1;
 	while (line[++i])
 	{
-		if (!ft_isalpha(line[i]) && line[i] != '.'
-			&& line[i] != '/' && line[i] != ' ' && line[i] != '_' && line[i] != '\0')
-		{
-			printf("previous char %c\n", line[i - 1]);
+		if (!ft_isalnum(line[i]) && line[i] != '.' && line[i] != '/'
+			&& line[i] != ' ' && line[i] != '_' && line[i] != '\r')
 			error_exit("Invalid character in texture line.");
-		}
 	}
-		*/
 	tokens = ft_split(line, ' ');
 	if (!tokens || !tokens[0] || !tokens[1] || tokens[2])
 		error_exit("Invalid texture line format. Should be: XX xxxx.xpm");

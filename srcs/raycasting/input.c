@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:10:29 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/16 11:06:54 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:32:39 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	on_press(int keycode, t_data *data)
 		data->keys.left = 1;
 	if (keycode == 65363)
 		data->keys.right = 1;
-	if (keycode == 65307) // ESC
+	if (keycode == 65307)
 	{
 		mlx_destroy_window(data->mlx, data->win);
 		exit(0);
@@ -53,120 +53,54 @@ int	on_release(int keycode, t_data *data)
 
 int	control_input(t_data *data)
 {
-	double moveSpeed = 0.03f;
-	double rotSpeed = 0.01f;
+	double	movespeed = 0.03f;
+	double	rotspeed = 0.01f;
 	if (data->keys.w)
 	{
-		if(data->config.map_lines[(int)(data->posY)][(int)(data->posX + data->dirX * moveSpeed)] == '0')
-			data->posX += data->dirX * moveSpeed;
-		if(data->config.map_lines[(int)(data->posY + data->dirY * moveSpeed)][(int)(data->posX)] == '0')
-			data->posY += data->dirY * moveSpeed;
+		if(data->config.map_lines[(int)(data->posy)][(int)(data->posx + data->dirx * movespeed)] == '0')
+			data->posx += data->dirx * movespeed;
+		if(data->config.map_lines[(int)(data->posy + data->diry * movespeed)][(int)(data->posx)] == '0')
+			data->posy += data->diry * movespeed;
 	}
-	//move backwards if no wall behind you
 	if (data->keys.s)
 	{
-		if(data->config.map_lines[(int)(data->posY)][(int)(data->posX - data->dirX * moveSpeed)] == '0')
-			data->posX -= data->dirX * moveSpeed;
-		if(data->config.map_lines[(int)(data->posY - data->dirY * moveSpeed)][(int)(data->posX)] == '0')
-			data->posY -= data->dirY * moveSpeed;
+		if(data->config.map_lines[(int)(data->posy)][(int)(data->posx - data->dirx * movespeed)] == '0')
+			data->posx -= data->dirx * movespeed;
+		if(data->config.map_lines[(int)(data->posy - data->diry * movespeed)][(int)(data->posx)] == '0')
+			data->posy -= data->diry * movespeed;
 	}
-	//move to the right
 	if (data->keys.d)
 	{
-		if(data->config.map_lines[(int)(data->posY)][(int)(data->posX + data->planeX * moveSpeed)] == '0')
-			data->posX += data->planeX * moveSpeed;
-		if(data->config.map_lines[(int)(data->posY + data->planeY * moveSpeed)][(int)(data->posX)] == '0')
-			data->posY += data->planeY * moveSpeed;
+		if(data->config.map_lines[(int)(data->posy)][(int)(data->posx + data->planex * movespeed)] == '0')
+			data->posx += data->planex * movespeed;
+		if(data->config.map_lines[(int)(data->posy + data->planey * movespeed)][(int)(data->posx)] == '0')
+			data->posy += data->planey * movespeed;
 	}
-	//move to the left
 	if (data->keys.a)
 	{
-		if(data->config.map_lines[(int)(data->posY)][(int)(data->posX - data->planeX * moveSpeed)] == '0')
-			data->posX -= data->planeX * moveSpeed;
-		if(data->config.map_lines[(int)(data->posY - data->planeY * moveSpeed)][(int)(data->posX)] == '0')
-			data->posY -= data->planeY * moveSpeed;
-			
+		if(data->config.map_lines[(int)(data->posy)][(int)(data->posx - data->planex * movespeed)] == '0')
+			data->posx -= data->planex * movespeed;
+		if(data->config.map_lines[(int)(data->posy - data->planey * movespeed)][(int)(data->posx)] == '0')
+			data->posy -= data->planey * movespeed;
 	}
-	if (data->keys.left) //fleche gauche
+	if (data->keys.left)
 	{
-		double oldDirX = data->dirX;
-		data->dirX = data->dirX * cos(rotSpeed) - data->dirY * sin(rotSpeed);
-		data->dirY = oldDirX * sin(rotSpeed) + data->dirY * cos(rotSpeed);
-		double oldPlaneX = data->planeX;
-		data->planeX = data->planeX * cos(rotSpeed) - data->planeY * sin(rotSpeed);
-		data->planeY = oldPlaneX * sin(rotSpeed) + data->planeY * cos(rotSpeed);
+		double olddirx = data->dirx;
+		data->dirx = data->dirx * cos(rotspeed) - data->diry * sin(rotspeed);
+		data->diry = olddirx * sin(rotspeed) + data->diry * cos(rotspeed);
+		double oldplanex = data->planex;
+		data->planex = data->planex * cos(rotspeed) - data->planey * sin(rotspeed);
+		data->planey = oldplanex * sin(rotspeed) + data->planey * cos(rotspeed);
 	}
-	if (data->keys.right) //fleche droite
+	if (data->keys.right)
 	{
-		//both camera direction and camera plane must be rotated
-		double oldDirX = data->dirX;
-		data->dirX = data->dirX * cos(-rotSpeed) - data->dirY * sin(-rotSpeed);
-		data->dirY = oldDirX * sin(-rotSpeed) + data->dirY * cos(-rotSpeed);
-		double oldPlaneX = data->planeX;
-		data->planeX = data->planeX * cos(-rotSpeed) - data->planeY * sin(-rotSpeed);
-		data->planeY = oldPlaneX * sin(-rotSpeed) + data->planeY * cos(-rotSpeed);
+		double olddirx = data->dirx;
+		data->dirx = data->dirx * cos(-rotspeed) - data->diry * sin(-rotspeed);
+		data->diry = olddirx * sin(-rotspeed) + data->diry * cos(-rotspeed);
+		double oldplanex = data->planex;
+		data->planex = data->planex * cos(-rotspeed) - data->planey * sin(-rotspeed);
+		data->planey = oldplanex * sin(-rotspeed) + data->planey * cos(-rotspeed);
 	}
 	render(data);
 	return (0);
 }
-
-/*
-int	control_input(t_data *data)
-{
-	double moveSpeed = 0.03f;
-	double rotSpeed = 0.01f;
-	if (data->keys.w)
-	{
-		if(data->config.map_lines[(int)(data->posX + data->dirX * moveSpeed)][(int)(data->posY)] == '0')
-			data->posX += data->dirX * moveSpeed;
-		if(data->config.map_lines[(int)(data->posX)][(int)(data->posY + data->dirY * moveSpeed)] == '0')
-			data->posY += data->dirY * moveSpeed;
-	}
-	//move backwards if no wall behind you
-	if (data->keys.s)
-	{
-		if(data->config.map_lines[(int)(data->posX - data->dirX * moveSpeed)][(int)(data->posY)] == '0')
-			data->posX -= data->dirX * moveSpeed;
-		if(data->config.map_lines[(int)(data->posX)][(int)(data->posY - data->dirY * moveSpeed)] == '0')
-			data->posY -= data->dirY * moveSpeed;
-	}
-	//move to the right
-	if (data->keys.d)
-	{
-		if(data->config.map_lines[(int)(data->posX + data->planeX * moveSpeed)][(int)(data->posY)] == '0')
-			data->posX += data->planeX * moveSpeed;
-		if(data->config.map_lines[(int)(data->posX)][(int)(data->posY + data->planeY * moveSpeed)] == '0')
-			data->posY += data->planeY * moveSpeed;
-	}
-	//move to the left
-	if (data->keys.a)
-	{
-		if(data->config.map_lines[(int)(data->posX - data->planeX * moveSpeed)][(int)(data->posY)] == '0')
-			data->posX -= data->planeX * moveSpeed;
-		if(data->config.map_lines[(int)(data->posX)][(int)(data->posY - data->planeY * moveSpeed)] == '0')
-			data->posY -= data->planeY * moveSpeed;
-			
-	}
-	if (data->keys.left) //fleche gauche
-	{
-		double oldDirX = data->dirX;
-		data->dirX = data->dirX * cos(rotSpeed) - data->dirY * sin(rotSpeed);
-		data->dirY = oldDirX * sin(rotSpeed) + data->dirY * cos(rotSpeed);
-		double oldPlaneX = data->planeX;
-		data->planeX = data->planeX * cos(rotSpeed) - data->planeY * sin(rotSpeed);
-		data->planeY = oldPlaneX * sin(rotSpeed) + data->planeY * cos(rotSpeed);
-	}
-	if (data->keys.right) //fleche droite
-	{
-		//both camera direction and camera plane must be rotated
-		double oldDirX = data->dirX;
-		data->dirX = data->dirX * cos(-rotSpeed) - data->dirY * sin(-rotSpeed);
-		data->dirY = oldDirX * sin(-rotSpeed) + data->dirY * cos(-rotSpeed);
-		double oldPlaneX = data->planeX;
-		data->planeX = data->planeX * cos(-rotSpeed) - data->planeY * sin(-rotSpeed);
-		data->planeY = oldPlaneX * sin(-rotSpeed) + data->planeY * cos(-rotSpeed);
-	}
-	render(data);
-	return (0);
-}
-*/
