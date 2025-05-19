@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:19:43 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/18 11:46:41 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/19 12:35:49 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,5 +182,6 @@ int	render(t_data *data)
 	update_gun(data);
 	draw_gun(data, 3);
 	mlx_put_image_to_window(data->mlx, data->win, data->image.img, 0, 0);
+	draw_minimap(data);
 	return (0);
 }

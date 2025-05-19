@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:02:50 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/18 11:10:25 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/19 11:52:59 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	load_texture(void *mlx, char *path, t_texture *tex)
 {
+	path = ft_strtrim(path, "\r");
 	tex->img = mlx_xpm_file_to_image(mlx, path, &tex->width, &tex->height);
 	if (!tex->img)
 		error_exit("Failed to load texture.");

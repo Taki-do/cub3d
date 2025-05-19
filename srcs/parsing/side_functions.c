@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:35:39 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/15 14:47:52 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/19 11:50:56 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	char_check_rgb(char *str)
 		if (str[i] == '\t')
 			error_exit("Tab is not valid in RGB range.");
 		if (!ft_isdigit(str[i]) && str[i] != 'F'
-			&& str[i] != 'C' && str[i] != ' ' && str[i] != ',')
+			&& str[i] != 'C' && str[i] != ' ' && str[i] != ',' && str[i] != '\r')
 			error_exit("Invalid caracter in floor/ceiling lines.");
 	}
 }

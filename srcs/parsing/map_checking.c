@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checking.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:40:58 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/18 11:48:29 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/19 11:51:14 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	valid_char(char c)
 {
 	if (c != EMPTY && c != WALL && c != NORTH && c != SOUTH
-		&& c != EAST && c != WEST && c != SPACE && c != 'M' && c != 'D')
+		&& c != EAST && c != WEST && c != SPACE && c != 'M' && c != 'D' && c != '\r')
 		error_exit("Invalid character in map.");
 }
 

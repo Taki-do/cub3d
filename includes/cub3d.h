@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:20:02 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/18 11:46:18 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:12:25 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <stdio.h>
 # include <error.h>
 
-# define WIDTH 600
-# define HEIGHT 480
+# define WIDTH 1080
+# define HEIGHT 720
 # define FLOOR_COLOR 0x333333
 # define CELLING_COLOR 0x87CEEB
 
@@ -172,5 +172,8 @@ void draw_gun(t_data *data, int scale);
 //[raycasting/door.c]
 void    update_door(t_data *data);
 int door_is_open(t_data *data);
+
+//[rendering/minimap.c]
+void	draw_minimap(t_data *data);
 
 #endif
