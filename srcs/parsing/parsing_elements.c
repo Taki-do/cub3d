@@ -32,9 +32,9 @@ void	parse_texture(char *line, t_config *config)
 	while (line[++i])
 	{
 		if (!ft_isalnum(line[i]) && line[i] != '.'
-			&& line[i] != '/' && line[i] != ' ' && line[i] != '_' && line[i] != '\0')
+			&& line[i] != '/' && line[i] != ' ' && line[i] != '_' && line[i] != '\r')
 		{
-			printf("previous char %c\n", line[i - 1]);
+			//printf("previous char %d\n", line[i]);
 			error_exit("Invalid character in texture line.");
 		}
 	}
