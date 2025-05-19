@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:19:01 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/19 11:13:33 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/19 11:33:02 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	parse_texture(char *line, t_config *config)
 	/*
 	while (line[++i])
 	{
-		if (!ft_isalnum(line[i]) && line[i] != '.'
-			&& line[i] != '/' && line[i] != ' ' && line[i] != '_')
+		if (!ft_isalpha(line[i]) && line[i] != '.'
+			&& line[i] != '/' && line[i] != ' ' && line[i] != '_' && line[i] != '\0')
 		{
-			//printf("previous char %d\n", line[i]);
+			printf("previous char %c\n", line[i - 1]);
 			error_exit("Invalid character in texture line.");
 		}
 	}
