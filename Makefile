@@ -28,6 +28,7 @@ SRC := \
 	$(SRC_DIR)raycasting/textures.c \
 	$(SRC_DIR)rendering/render.c \
 	$(SRC_DIR)rendering/window.c \
+	$(SRC_DIR)rendering/minimap.c \
 	$(SRC_DIR)utils/free.c \
 	$(SRC_DIR)utils/utils.c \
 	$(SRC_DIR)main.c \

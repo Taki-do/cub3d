@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:20:02 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/18 11:46:18 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:00:59 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,5 +172,8 @@ void draw_gun(t_data *data, int scale);
 //[raycasting/door.c]
 void    update_door(t_data *data);
 int door_is_open(t_data *data);
+
+//[rendering/minimap.c]
+void	draw_minimap(t_data *data);
 
 #endif
