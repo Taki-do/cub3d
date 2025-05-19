@@ -6,7 +6,7 @@
 /*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:01:46 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/19 13:41:26 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/19 15:06:37 by tboulogn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,24 @@ void	draw_square(t_texture *texture, int x, int y, int color)
 	int		size;
 
 	size = 15;
-
 	j = -1;
-	while(++j < size)
+	while (++j < size)
 	{
 		i = -1;
 		while (++i < size)
 			draw_pixel(texture, x * size + i, y * size + j, color);
 	}
+}
+
+int	get_tile_color(char c)
+{
+	if (c == '1' || c == ' ')
+		return (0x888888);
+	if (c == '0')
+		return (0x000000);
+	if (c == 'D')
+		return (0xFFD700);
+	return (0x333333);
 }
 
 void	draw_minimap(t_data *data)
@@ -45,14 +55,11 @@ void	draw_minimap(t_data *data)
 		{
 			map_x = (int)data->posX + x;
 			map_y = (int)data->posY + y;
-			if (map_x >= 0 && map_y >= 0 && map_x < data->config.map_width && map_y < data->config.map_height)
+			if (map_y >= 0 && map_y < data->config.map_height
+				&& map_x >= 0
+				&& map_x < (int)ft_strlen(data->config.map_lines[map_y]))
 			{
-				if (data->config.map_lines[map_y][map_x] == '1')
-					color = 0x888888;
-				else if (data->config.map_lines[map_y][map_x] == '0')
-					color = 0x000000;
-				else if (data->config.map_lines[map_y][map_x] == 'D')
-					color = 0xFFD700;
+				color = get_tile_color(data->config.map_lines[map_y][map_x]);
 				draw_square(&data->image, x + 6, y + 6, color);
 			}
 		}
