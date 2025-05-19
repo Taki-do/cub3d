@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 13:35:57 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/15 14:37:14 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/19 15:31:34 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,17 @@
 /* ************************************************************************** */
 /*                               EXIT AND ERROR                               */
 /* ************************************************************************** */
-void	error_exit(char *msg);
+void	error_exit(char *msg, t_data *data);
 
 /* ************************************************************************** */
 /*                              MEMORY MANAGEMENT                             */
 /* ************************************************************************** */
-void	*ft_secure_malloc(size_t bytes);
+void	*ft_secure_malloc(size_t bytes, t_data *data);
 void	free_char_tab(char **tab);
 void	free_config(t_config *config);
 void	free_data(t_data *data);
 void	init_data(t_data *data);
+int	    close_window(t_data *data);
 
 /* ************************************************************************** */
 /*                                CHAR HANDLING                               */

@@ -6,13 +6,14 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 14:35:39 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/19 11:32:57 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/19 15:50:54 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/parsing.h"
+#include "../../includes/utils.h"
 
-void	char_check_rgb(char *str)
+void	char_check_rgb(char *str, t_data *data)
 {
 	int	i;
 
@@ -20,10 +21,10 @@ void	char_check_rgb(char *str)
 	while (str[++i])
 	{
 		if (str[i] == '\t')
-			error_exit("Tab is not valid in RGB range.");
+			error_exit("Tab is not valid in RGB range.", data);
 		if (!ft_isdigit(str[i]) && str[i] != 'F'
 			&& str[i] != 'C' && str[i] != ' ' && str[i] != ',' && str[i] != '\r')
-			error_exit("Invalid caracter in floor/ceiling lines.");
+			error_exit("Invalid caracter in floor/ceiling lines.", data);
 	}
 }
 

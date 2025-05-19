@@ -6,18 +6,18 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:40:58 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/18 11:48:29 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:09:45 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/parsing.h"
 #include "../../includes/utils.h"
 
-void	valid_char(char c)
+void	valid_char(char c, t_data *data)
 {
 	if (c != EMPTY && c != WALL && c != NORTH && c != SOUTH
 		&& c != EAST && c != WEST && c != SPACE && c != 'M' && c != 'D' && c != '\r')
-		error_exit("Invalid character in map.");
+		error_exit("Invalid character in map.", data);
 }
 
 int	is_player(char c)
@@ -46,11 +46,11 @@ void	validate_map(t_config *config, int x, int y, int player_found)
 		x = 0;
 		while (config->map_lines[y][x])
 		{
-			valid_char(config->map_lines[y][x]);
+			valid_char(config->map_lines[y][x], config->data);
 			if (is_player(config->map_lines[y][x]))
 			{
 				if (player_found)
-					error_exit("Multiple players found.");
+					error_exit("Multiple players found.", config->data);
 				config->player_x = x;
 				config->player_y = y;
 				config->player_dir = config->map_lines[y][x];
@@ -78,8 +78,9 @@ void	validate_map(t_config *config, int x, int y, int player_found)
 		}
 	}
 	if (!player_found)
-		error_exit("No player found in the map.");
-	map_copy = dup_map(config->map_lines);
-	flood_fill(map_copy, config->player_y, config->player_x);
+		error_exit("No player found in the map.", config->data);
+	map_copy = dup_map(config->map_lines, config->data);
+	flood_fill(map_copy, config->player_y, config->player_x, config->data);
+	config->data->dup = NULL;
 	free_char_tab(map_copy);
 }

@@ -6,11 +6,12 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:10:29 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/18 11:35:23 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:54:51 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
+#include "../includes/utils.h"
 
 void	update_monsters(t_data *data)
 {
@@ -65,9 +66,9 @@ int	on_press(int keycode, t_data *data)
 		data->keys.left = 1;
 	if (keycode == 65363)
 		data->keys.right = 1;
-	if (keycode == 65307) // ESC
+	if (keycode == 65307)
 	{
-		mlx_destroy_window(data->mlx, data->win);
+		free_data(data);
 		exit(0);
 	}
 	return (0);

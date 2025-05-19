@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 17:19:01 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/19 11:33:02 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/19 15:33:01 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,32 @@ void    parse_texture(char *line, t_config *config)
     {
         if (!ft_isalpha(line[i]) && !ft_isdigit(line[i]) && line[i] != '.'
             && line[i] != '/' && line[i] != ' ' && line[i] != '_' && line[i] != '\r')
-            error_exit("Invalid character in texture line.");
+            	error_exit("Invalid character in texture line.", config->data);
     }
     tokens = ft_split(line, ' ');
     if (!tokens || !tokens[0] || !tokens[1] || tokens[2])
-        error_exit("Invalid texture line format. Should be: XX xxxx.xpm");
-    if (ft_strcmp(tokens[0], "NO") == 0)
+        error_exit("Invalid texture line format. Should be: XX xxxx.xpm", config->data);
+    if (ft_strncmp(tokens[0], "NO", 2) == 0)
         config->no_path = ft_strdup(tokens[1]);
-    else if (ft_strcmp(tokens[0], "SO") == 0)
+    else if (ft_strncmp(tokens[0], "SO", 2) == 0)
         config->so_path = ft_strdup(tokens[1]);
-    else if (ft_strcmp(tokens[0], "WE") == 0)
+    else if (ft_strncmp(tokens[0], "WE", 2) == 0)
         config->we_path = ft_strdup(tokens[1]);
-    else if (ft_strcmp(tokens[0], "EA") == 0)
+    else if (ft_strncmp(tokens[0], "EA", 2) == 0)
         config->ea_path = ft_strdup(tokens[1]);
     else
         error_exit("Unknown texture identifier."
-            "Can only be : NO, SO, WE and EA");
+            "Can only be : NO, SO, WE and EA", config->data);
     free_char_tab(tokens);
 }
 
-int	parse_rgb_component(char *s)
+int	parse_rgb_component(char *s, t_data *data)
 {
 	int	value;
 
 	value = ft_atoi(s);
 	if (value < 0 || value > 255)
-		error_exit("RGB color out of range, should be between 0 and 255");
+		error_exit("RGB color out of range, should be between 0 and 255", data);
 	return (value);
 }
 
@@ -75,22 +75,22 @@ void	parse_color_line(char *line, t_config *config)
 	int		g;
 	int		b;
 
-	char_check_rgb(line);
+	char_check_rgb(line, config->data);
 	tokens = ft_split(line, ' ');
 	if (!tokens || !tokens[0] || !tokens[1] || tokens[2])
-		error_exit("Invalide color line format, should be: X n,n,n");
+		error_exit("Invalide color line format, should be: X n,n,n", config->data);
 	rgb = ft_split(tokens[1], ',');
 	if (!rgb || !rgb[0] || !rgb[1] || !rgb[2] || rgb[3])
-		error_exit("Invalide RGB format, should be: n,n,n");
-	r = parse_rgb_component(rgb[0]);
-	g = parse_rgb_component(rgb[1]);
-	b = parse_rgb_component(rgb[2]);
+		error_exit("Invalide RGB format, should be: n,n,n", config->data);
+	r = parse_rgb_component(rgb[0], config->data);
+	g = parse_rgb_component(rgb[1], config->data);
+	b = parse_rgb_component(rgb[2], config->data);
 	if (ft_strcmp(tokens[0], "F") == 0)
 		config->floor_color = combine_rgb(r, g, b);
 	else if (ft_strcmp(tokens[0], "C") == 0)
 		config->ceiling_color = combine_rgb(r, g, b);
 	else
-		error_exit("Unknown color identifier. Can only be: F or C");
+		error_exit("Unknown color identifier. Can only be: F or C", config->data);
 	free_char_tab(tokens);
 	free_char_tab(rgb);
 }

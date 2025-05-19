@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 09:20:02 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/19 14:00:59 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/19 15:47:00 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ typedef struct s_monster
 	int		frame_timer;
 }	t_monster;
 
+struct s_data;
+
 typedef struct s_config
 {
 	char	*no_path;
@@ -63,6 +65,7 @@ typedef struct s_config
 	char	player_dir;
 	int		monster_count;
 	int		door_count;
+	struct s_data		*data;
 	t_door		door[10];
 	t_monster	monster[50];
 }	t_config;
@@ -102,7 +105,8 @@ typedef struct s_data
 	int			shotgun_frame_timer;
     t_keys      keys;
 	t_config	config;
-	int			**tab_int;
+	char		**tab;
+	char		**dup;
     void    *mlx;
     void    *win;
     double	posX;
@@ -157,9 +161,6 @@ int	mouse_press(int button, int x, int y, t_data *data);
 
 void	update_monsters(t_data *data);
 
-//[utils/utils.c]
-void	error_exit(char *msg);
-
 //[raycasting/monster.c]
 void draw_monster(t_data *data, t_monster m);
 void check_monster_hit(t_data *data);
@@ -175,5 +176,7 @@ int door_is_open(t_data *data);
 
 //[rendering/minimap.c]
 void	draw_minimap(t_data *data);
+
+//void	free_data(t_data *data);
 
 #endif

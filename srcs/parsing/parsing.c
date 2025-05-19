@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tboulogn <tboulogn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 13:11:53 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/15 14:45:07 by tboulogn         ###   ########.fr       */
+/*   Updated: 2025/05/19 15:50:04 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	process_line(t_list **line_list, char *line, int *line_count)
 	(*line_count)++;
 }
 
-char	**read_cub_map(const char *filename, int line_count, int i)
+char	**read_cub_map(const char *filename, int line_count, int i, t_data *data)
 {
 	int		fd;
 	char	*line;
@@ -39,7 +39,7 @@ char	**read_cub_map(const char *filename, int line_count, int i)
 		process_line(&line_list, line, &line_count);
 		line = get_next_line(fd);
 	}
-	lines = ft_secure_malloc((line_count + 1) * sizeof(char *));
+	lines = ft_secure_malloc((line_count + 1) * sizeof(char *), data);
 	current = line_list;
 	while (current)
 	{
@@ -66,7 +66,7 @@ void	parse_config(char **lines, t_config *config, int i, int elements_count)
 	while (lines[i])
 	{
 		if (has_tab(lines[i]))
-			error_exit("Tab is not valid in config.");
+			error_exit("Tab is not valid in config.", config->data);
 		if (check_empty_line(lines[i]))
 		{
 			i++;
@@ -81,7 +81,7 @@ void	parse_config(char **lines, t_config *config, int i, int elements_count)
 			break ;
 	}
 	if (elements_count != 6)
-		error_exit("Missing or duplicate elements.");
+		error_exit("Missing or duplicate elements.", config->data);
 	copy_map_lines(&lines[i], config, -1, 0);
 }
 
@@ -98,14 +98,14 @@ void	copy_map_lines(char **map_start, t_config *config,
 		if (check_empty_line(map_start[height]))
 			empty_found = 1;
 		else if (empty_found)
-			error_exit("empty line found inside the map.");
+			error_exit("empty line found inside the map.", config->data);
 		len = ft_strlen(map_start[height]);
 		if (len > max_width)
 			max_width = len;
 	}
 	config->map_height = height;
 	config->map_width = max_width;
-	config->map_lines = ft_secure_malloc((height + 1) * sizeof(char *));
+	config->map_lines = ft_secure_malloc((height + 1) * sizeof(char *), config->data);
 	i = -1;
 	while (++i < height)
 		config->map_lines[i] = ft_strdup(map_start[i]);
