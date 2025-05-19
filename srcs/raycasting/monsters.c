@@ -14,11 +14,11 @@
 
 void draw_monster(t_data *data, t_monster m)
 {
-	double spriteX = m.x - data->posX;
-	double spriteY = m.y - data->posY;
-	double invDet = 1.0 / (data->planeX * data->dirY - data->dirX * data->planeY);
-	double transformX = invDet * (data->dirY * spriteX - data->dirX * spriteY);
-	double transformY = invDet * (-data->planeY * spriteX + data->planeX * spriteY);
+	double spriteX = m.x - data->posx;
+	double spriteY = m.y - data->posy;
+	double invDet = 1.0 / (data->planex * data->diry - data->dirx * data->planey);
+	double transformX = invDet * (data->diry * spriteX - data->dirx * spriteY);
+	double transformY = invDet * (-data->planey * spriteX + data->planex * spriteY);
 
 	int spriteScreenX = (int)((WIDTH / 2) * (1 + transformX / transformY));
     
@@ -66,13 +66,13 @@ void check_monster_hit(t_data *data)
         if (m->hp <= 0)
             return ;
 
-        double spriteX = m->x - data->posX;
-        double spriteY = m->y - data->posY;
+        double spriteX = m->x - data->posx;
+        double spriteY = m->y - data->posy;
 
-        double invDet = 1.0 / (data->planeX * data->dirY - data->dirX * data->planeY);
+        double invDet = 1.0 / (data->planex * data->diry - data->dirx * data->planey);
 
-        double transformX = invDet * (data->dirY * spriteX - data->dirX * spriteY);
-        double transformY = invDet * (-data->planeY * spriteX + data->planeX * spriteY);
+        double transformX = invDet * (data->diry * spriteX - data->dirx * spriteY);
+        double transformY = invDet * (-data->planey * spriteX + data->planex * spriteY);
 
         if (transformY <= 0)
             return ;

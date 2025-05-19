@@ -53,8 +53,8 @@ void    draw_minimap(t_data *data)
         x = -6;
         while (++x <= 5)
         {
-            map_x = (int)data->posX + x;
-            map_y = (int)data->posY + y;
+            map_x = (int)data->posx + x;
+            map_y = (int)data->posy + y;
             if (map_y >= 0 && map_y < data->config.map_height
                 && map_x >= 0
                 && map_x < (int)ft_strlen(data->config.map_lines[map_y]))

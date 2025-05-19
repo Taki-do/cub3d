@@ -21,8 +21,8 @@ void	update_monsters(t_data *data)
 		t_monster *m = &data->config.monster[i];
 		if (m->hp > 0)
 		{
-			double dx = data->posX - m->x;
-			double dy = data->posY - m->y;
+			double dx = data->posx - m->x;
+			double dy = data->posy - m->y;
 			double dist = sqrt(dx * dx + dy * dy);
 			m->frame_timer++;
 			if (m->frame_timer > 100)
@@ -97,54 +97,51 @@ int	control_input(t_data *data)
 	double rotSpeed = 0.01f;
 	if (data->keys.w)
 	{
-		if(data->config.map_lines[(int)(data->posY)][(int)(data->posX + data->dirX * moveSpeed)] == '0')
-			data->posX += data->dirX * moveSpeed;
-		if(data->config.map_lines[(int)(data->posY + data->dirY * moveSpeed)][(int)(data->posX)] == '0')
-			data->posY += data->dirY * moveSpeed;
+		if(data->config.map_lines[(int)(data->posy)][(int)(data->posx + data->dirx * moveSpeed)] == '0')
+			data->posx += data->dirx * moveSpeed;
+		if(data->config.map_lines[(int)(data->posy + data->diry * moveSpeed)][(int)(data->posx)] == '0')
+			data->posy += data->diry * moveSpeed;
 	}
-	//move backwards if no wall behind you
+
 	if (data->keys.s)
 	{
-		if(data->config.map_lines[(int)(data->posY)][(int)(data->posX - data->dirX * moveSpeed)] == '0')
-			data->posX -= data->dirX * moveSpeed;
-		if(data->config.map_lines[(int)(data->posY - data->dirY * moveSpeed)][(int)(data->posX)] == '0')
-			data->posY -= data->dirY * moveSpeed;
+		if(data->config.map_lines[(int)(data->posy)][(int)(data->posx - data->dirx * moveSpeed)] == '0')
+			data->posx -= data->dirx * moveSpeed;
+		if(data->config.map_lines[(int)(data->posy - data->diry * moveSpeed)][(int)(data->posx)] == '0')
+			data->posy -= data->diry * moveSpeed;
 	}
-	//move to the right
 	if (data->keys.d)
 	{
-		if(data->config.map_lines[(int)(data->posY)][(int)(data->posX + data->planeX * moveSpeed)] == '0')
-			data->posX += data->planeX * moveSpeed;
-		if(data->config.map_lines[(int)(data->posY + data->planeY * moveSpeed)][(int)(data->posX)] == '0')
-			data->posY += data->planeY * moveSpeed;
+		if(data->config.map_lines[(int)(data->posy)][(int)(data->posx + data->planex * moveSpeed)] == '0')
+			data->posx += data->planex * moveSpeed;
+		if(data->config.map_lines[(int)(data->posy + data->planey * moveSpeed)][(int)(data->posx)] == '0')
+			data->posy += data->planey * moveSpeed;
 	}
-	//move to the left
 	if (data->keys.a)
 	{
-		if(data->config.map_lines[(int)(data->posY)][(int)(data->posX - data->planeX * moveSpeed)] == '0')
-			data->posX -= data->planeX * moveSpeed;
-		if(data->config.map_lines[(int)(data->posY - data->planeY * moveSpeed)][(int)(data->posX)] == '0')
-			data->posY -= data->planeY * moveSpeed;
+		if(data->config.map_lines[(int)(data->posy)][(int)(data->posx - data->planex * moveSpeed)] == '0')
+			data->posx -= data->planex * moveSpeed;
+		if(data->config.map_lines[(int)(data->posy - data->planey * moveSpeed)][(int)(data->posx)] == '0')
+			data->posy -= data->planey * moveSpeed;
 			
 	}
-	if (data->keys.left) //fleche gauche
+	if (data->keys.left)
 	{
-		double oldDirX = data->dirX;
-		data->dirX = data->dirX * cos(rotSpeed) - data->dirY * sin(rotSpeed);
-		data->dirY = oldDirX * sin(rotSpeed) + data->dirY * cos(rotSpeed);
-		double oldPlaneX = data->planeX;
-		data->planeX = data->planeX * cos(rotSpeed) - data->planeY * sin(rotSpeed);
-		data->planeY = oldPlaneX * sin(rotSpeed) + data->planeY * cos(rotSpeed);
+		double olddirx = data->dirx;
+		data->dirx = data->dirx * cos(rotSpeed) - data->diry * sin(rotSpeed);
+		data->diry = olddirx * sin(rotSpeed) + data->diry * cos(rotSpeed);
+		double oldplanex = data->planex;
+		data->planex = data->planex * cos(rotSpeed) - data->planey * sin(rotSpeed);
+		data->planey = oldplanex * sin(rotSpeed) + data->planey * cos(rotSpeed);
 	}
-	if (data->keys.right) //fleche droite
+	if (data->keys.right)
 	{
-		//both camera direction and camera plane must be rotated
-		double oldDirX = data->dirX;
-		data->dirX = data->dirX * cos(-rotSpeed) - data->dirY * sin(-rotSpeed);
-		data->dirY = oldDirX * sin(-rotSpeed) + data->dirY * cos(-rotSpeed);
-		double oldPlaneX = data->planeX;
-		data->planeX = data->planeX * cos(-rotSpeed) - data->planeY * sin(-rotSpeed);
-		data->planeY = oldPlaneX * sin(-rotSpeed) + data->planeY * cos(-rotSpeed);
+		double olddirx = data->dirx;
+		data->dirx = data->dirx * cos(-rotSpeed) - data->diry * sin(-rotSpeed);
+		data->diry = olddirx * sin(-rotSpeed) + data->diry * cos(-rotSpeed);
+		double oldplanex = data->planex;
+		data->planex = data->planex * cos(-rotSpeed) - data->planey * sin(-rotSpeed);
+		data->planey = oldplanex * sin(-rotSpeed) + data->planey * cos(-rotSpeed);
 	}
 	render(data);
 	return (0);
@@ -159,24 +156,23 @@ int	mouse_move(int x, int y, t_data *data)
 	if (last_x == 1)
 		last_x = x;
 	int delta_x = x - last_x;
-	if (delta_x < 0) //fleche gauche
+	if (delta_x < 0)
 	{
-		double oldDirX = data->dirX;
-		data->dirX = data->dirX * cos(rotSpeed) - data->dirY * sin(rotSpeed);
-		data->dirY = oldDirX * sin(rotSpeed) + data->dirY * cos(rotSpeed);
-		double oldPlaneX = data->planeX;
-		data->planeX = data->planeX * cos(rotSpeed) - data->planeY * sin(rotSpeed);
-		data->planeY = oldPlaneX * sin(rotSpeed) + data->planeY * cos(rotSpeed);
+		double olddirx = data->dirx;
+		data->dirx = data->dirx * cos(rotSpeed) - data->diry * sin(rotSpeed);
+		data->diry = olddirx * sin(rotSpeed) + data->diry * cos(rotSpeed);
+		double oldplanex = data->planex;
+		data->planex = data->planex * cos(rotSpeed) - data->planey * sin(rotSpeed);
+		data->planey = oldplanex * sin(rotSpeed) + data->planey * cos(rotSpeed);
 	}
-	if (delta_x > 0) //fleche droite
+	if (delta_x > 0)
 	{
-		//both camera direction and camera plane must be rotated
-		double oldDirX = data->dirX;
-		data->dirX = data->dirX * cos(-rotSpeed) - data->dirY * sin(-rotSpeed);
-		data->dirY = oldDirX * sin(-rotSpeed) + data->dirY * cos(-rotSpeed);
-		double oldPlaneX = data->planeX;
-		data->planeX = data->planeX * cos(-rotSpeed) - data->planeY * sin(-rotSpeed);
-		data->planeY = oldPlaneX * sin(-rotSpeed) + data->planeY * cos(-rotSpeed);
+		double olddirx = data->dirx;
+		data->dirx = data->dirx * cos(-rotSpeed) - data->diry * sin(-rotSpeed);
+		data->diry = olddirx * sin(-rotSpeed) + data->diry * cos(-rotSpeed);
+		double oldplanex = data->planex;
+		data->planex = data->planex * cos(-rotSpeed) - data->planey * sin(-rotSpeed);
+		data->planey = oldplanex * sin(-rotSpeed) + data->planey * cos(-rotSpeed);
 	}
 	last_x = x;
 	render(data);

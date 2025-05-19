@@ -96,57 +96,56 @@ typedef struct s_keys
 
 typedef struct s_data
 {
-    t_texture   wall[4];
-    t_texture   image;
+	t_texture	wall[4];
+	t_texture	image;
 	t_texture	monster_texture[3];
 	t_texture	shotgun[3];
 	t_texture	door[2];
+	t_config	config;
+    t_keys      keys;
 	int			shotgun_frame;
 	int			shotgun_frame_timer;
-    t_keys      keys;
-	t_config	config;
 	char		**tab;
 	char		**dup;
-    void    *mlx;
-    void    *win;
-    double	posX;
-    double  posY;
-	double	dirX;
-    double  dirY;
-	double	planeX;
-    double  planeY;
-    double CameraX;
-	double rayDirX;
-	double rayDirY;
-	//dans quel carre de la map somme nous
-	int		mapX;
-	int		mapY;
-	//taille du rayon de notre position jusqu'a la bordure du prochain carre
-	double sideDistX;
-    double sideDistY;
-	//taille du rayon du carre actuel jusqu'a la bordure du prochain carre
-	double deltaDistX;
-	double deltaDistY;
-	double prepWallDist; //to calculate lenght of the ray
-	//la distance a faire pour passer au prochain carre
-	int		stepX;
-	int		stepY;
-	int		hit; //un mur a ete touche ?
-	int		side; //c'etait au N S ou E W ?
-	int		lineHeight;
-	int		drawStart;
-	int		drawEnd;
-	int		last_mouse_x;
-	int		ignore_next_mouse;
-	double	zbuffer[WIDTH];
+	void		*mlx;
+	void		*win;
+	double		posx;
+	double		posy;
+	double		dirx;
+	double		diry;
+	double		planex;
+	double		planey;
+	double		camerax;
+	double		raydirx;
+	double		raydiry;
+	double		wallX;
+	int			mapx;
+	int			mapy;
+	double		sidedistx;
+	double		sidedisty;
+	double		deltadistx;
+	double		deltadisty;
+	double		prepwalldist;
+	int			stepx;
+	int			stepy;
+	int			hit;
+	int			side;
+	int			texx;
+	int			lineheight;
+	int			drawstart;
+	int			drawend;
+	int			last_mouse_x;
+	int			ignore_next_mouse;
+	double		zbuffer[WIDTH];
 }   t_data;
 
 //[textures.c]
 int     get_pixel(t_texture *texture, int x, int y);
 void	draw_pixel(t_texture *texture, int x, int y, int color);
 
-//[cub3d.c]
-int	render(t_data *data);
+//[raycasting/cub3d.c]
+int		render(t_data *data);
+void	clear_window(t_texture *texture);
 
 //[raycasting/init.c]
 void	init_keys(t_data *data);
@@ -177,6 +176,9 @@ int door_is_open(t_data *data);
 //[rendering/minimap.c]
 void	draw_minimap(t_data *data);
 
-//void	free_data(t_data *data);
+//[raycasting/dda.c]
+void	init_step(t_data *data);
+void	init_dda(t_data *data, int x);
+void	dda_loop(t_data *data);
 
 #endif

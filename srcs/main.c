@@ -38,8 +38,8 @@ int	main(int ac, char **av)
 	load_all_textures(&data); //ICI
 	init_keys(&data);
 	init_position(&data, data.config.player_dir);
-	data.posX = data.config.player_x;
-	data.posY = data.config.player_y;
+	data.posx = data.config.player_x;
+	data.posy = data.config.player_y;
 	init_window(&data, WIDTH, HEIGHT);
 	render(&data);
 	mlx_loop_hook(data.mlx, control_input, &data);

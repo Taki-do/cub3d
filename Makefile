@@ -26,6 +26,7 @@ SRC := \
 	$(SRC_DIR)raycasting/init.c \
 	$(SRC_DIR)raycasting/input.c \
 	$(SRC_DIR)raycasting/textures.c \
+	$(SRC_DIR)raycasting/dda.c \
 	$(SRC_DIR)rendering/render.c \
 	$(SRC_DIR)rendering/window.c \
 	$(SRC_DIR)rendering/minimap.c \

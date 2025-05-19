@@ -22,34 +22,37 @@ void	init_keys(t_data *data)
 	data->keys.right = 0;
 }
 
+void	init_position_w(t_data *data)
+{
+	data->dirx = 1;
+	data->diry = 0;
+	data->planex = 0;
+	data->planey = -0.66;
+}
+
 void	init_position(t_data *data, char dir)
 {
 	if (dir == 'N')
 	{
-		data->dirX = 0;
-		data->dirY = -1;
-		data->planeX = 0.66;
-		data->planeY = 0;
+		data->dirx = 0;
+		data->diry = -1;
+		data->planex = 0.66;
+		data->planey = 0;
 	}
 	else if (dir == 'S')
 	{
-		data->dirX = 0;
-		data->dirY = 1;
-		data->planeX = -0.66;
-		data->planeY = 0;
+		data->dirx = 0;
+		data->diry = 1;
+		data->planex = -0.66;
+		data->planey = 0;
 	}
 	else if (dir == 'E')
 	{
-		data->dirX = -1;
-		data->dirY = 0;
-		data->planeX = 0;
-		data->planeY = 0.66;
+		data->dirx = -1;
+		data->diry = 0;
+		data->planex = 0;
+		data->planey = 0.66;
 	}
 	else if (dir == 'W')
-	{
-		data->dirX = 1;
-		data->dirY = 0;
-		data->planeX = 0;
-		data->planeY = -0.66;
-	}
+		init_position_w(data);
 }

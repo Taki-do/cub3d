@@ -12,170 +12,107 @@
 
 #include "../../includes/cub3d.h"
 
-void	clear_window(t_texture *texture) //opti possible avec memset
+void	configure_drawing(t_data *data, int x)
 {
-	int	i;
-	int	j;
+	if (data->side == 0)
+		data->prepwalldist = data->sidedistx - data->deltadistx;
+	else
+		data->prepwalldist = data->sidedisty - data->deltadisty;
+	data->zbuffer[x] = data->prepwalldist;
+	data->lineheight = (int)(HEIGHT / data->prepwalldist);
+	data->drawstart = -data->lineheight / 2 + HEIGHT / 2;
+	if (data->drawstart < 0)
+		data->drawstart = 0;
+	data->drawend = data->lineheight / 2 + HEIGHT / 2;
+	if (data->drawend >= HEIGHT)
+		data->drawend = HEIGHT - 1;
+	if (data->side == 0)
+		data->wallX = data->posy + data->prepwalldist * data->raydiry;
+	else
+		data->wallX = data->posx + data->prepwalldist * data->raydirx;
+	data->wallX -= floor((data->wallX));
+}
 
-	i = 0;
-	while (i < HEIGHT)
+int	choose_texture(t_data *data)
+{
+	int	nb;
+
+	if (data->side == 0)
 	{
-		j = 0;
-		while (j < WIDTH)
-		{
-			draw_pixel(texture, j, i, 0x000000);
-			j++;
-		}
-		i++;
+		if (data->raydirx > 0)
+			nb = 0;
+		else
+			nb = 1;
 	}
+	else
+	{
+		if (data->raydiry > 0)
+			nb = 2;
+		else
+			nb = 3;
+	}
+	data->texx = (int)(data->wallX * (double)64);
+	if (data->side == 0 && data->raydirx > 0)
+		data->texx = 64 - data->texx - 1;
+	if (data->side == 1 && data->raydiry < 0)
+		data->texx = 64 - data->texx - 1;
+	return (nb);
+}
+
+void	draw_end_buffer(t_data *data, int i, int x)
+{
+	i = data->drawend - 1;
+	while (++i < HEIGHT)
+		draw_pixel(&data->image, x, i, data->config.floor_color);
+}
+
+void	draw_buffer(t_data *data, int x, int i, int texture_nb)
+{
+	int	d;
+	int	tex_y;
+
+	while (++i < data->drawstart)
+		draw_pixel(&data->image, x, i, data->config.ceiling_color);
+	i = data->drawstart - 1;
+	while (++i < data->drawend)
+	{
+		d = i * 256 - HEIGHT * 128 + data->lineheight * 128;
+		tex_y = ((d * 64) / data->lineheight) / 256;
+		if (data->side == 1)
+			tex_y /= 2;
+		if (data->config.map_lines[data->mapy][data->mapx] == 'D' &&
+					door_is_open(data))
+			draw_pixel(&data->image, x, i,
+				get_pixel(&data->door[1], data->texx, tex_y));
+		else if (data->config.map_lines[data->mapy][data->mapx] == 'D' &&
+					!door_is_open(data))
+			draw_pixel(&data->image, x, i,
+				get_pixel(&data->door[0], data->texx, tex_y));
+		else
+			draw_pixel(&data->image, x, i,
+				get_pixel(&data->wall[texture_nb], data->texx, tex_y));
+	}
+	draw_end_buffer(data, i, x);
 }
 
 int	render(t_data *data)
 {
-	int	x = 0;
+	int	x;
+	int	i;
+
 	clear_window(&data->image);
+	x = 0;
+	i = -1;
 	while (x < WIDTH)
 	{
-		data->CameraX = 2 * x / (double)WIDTH - 1; //par de gauche (-1) jusqu'a droite au fur et a mesure
-		data->rayDirX = data->dirX + data->planeX * data->CameraX; //calcul des vecteur qui donne la coordonne qui commence a gauche
-		data->rayDirY = data->dirY + data->planeY * data->CameraX; //le FOV aussi avec 0.66 qui donne la distance de vue (ex: -1, -0.66)
-		data->mapX = (int)data->posX;
-		data->mapY = (int)data->posY;
-		//chiffre enorme pour dire qu'on ne peut pas passer en X ou en Y dans le cas ou l'on va que en X ou en Y
-		if (data->rayDirX == 0)
-			data->deltaDistX = 1e30;
-		else
-			data->deltaDistX = fabs(1 / data->rayDirX);
-		if (data->rayDirY == 0)
-			data->deltaDistY = 1e30;
-		else
-			data->deltaDistY = fabs(1 / data->rayDirY);
-		data->hit = 0;
-		//on regarde dans quelle direction va le rayon stepX et stepY, on calcul les side dist pour savoir le prochain mur en X ou Y
-		if (data->rayDirX < 0)
-		{
-			data->stepX = -1;
-			data->sideDistX = (data->posX - data->mapX) * data->deltaDistX;
-		}
-		else
-		{
-			data->stepX = 1;
-			data->sideDistX = (data->mapX + 1.0 - data->posX) * data->deltaDistX;
-		}
-		if (data->rayDirY < 0)
-		{
-			data->stepY = -1;
-			data->sideDistY = (data->posY - data->mapY) * data->deltaDistY;
-		}
-		else
-		{
-			data->stepY = 1;
-			data->sideDistY = (data->mapY + 1.0 - data->posY) * data->deltaDistY;
-		}
-		//DDA start
-		//on va en X ou Y suivant le plus proche et on decale nos mesure en fonction pour preparer le prochain passage
+		init_dda(data, x);
 		while (data->hit == 0)
-		{
-			if (data->sideDistX < data->sideDistY)
-			{
-				data->sideDistX += data->deltaDistX;
-				data->mapX += data->stepX;
-				data->side = 0; //North or South hit
-			}
-			else
-			{
-				data->sideDistY += data->deltaDistY;
-				data->mapY += data->stepY;
-				data->side = 1; //Ouest ou est
-			}
-			if ((data->config.map_lines[data->mapY][data->mapX] == '1') ||
-				(data->config.map_lines[data->mapY][data->mapX] == 'D'))
-				{
-					if (data->config.map_lines[data->mapY][data->mapX] == 'D' &&
-						door_is_open(data))
-						data->hit = 0;
-					else
-						data->hit = 1;
-				}
-		}
-		//un recule un coup car quand on touche on est dans le mur mais on veut la distance avant le mur
-		//aussi on utilise la distance qui part du camera plan pour eviter le fish eye effect
-		if (data->side == 0)
-			data->prepWallDist = data->sideDistX - data->deltaDistX;
-		else
-			data->prepWallDist = data->sideDistY - data->deltaDistY;
-
-		data->zbuffer[x] = data->prepWallDist; // enregistre la position du mur a chaque colonne (bonus)
-		
-		//on calcule la hauteur de la ligne
-		data->lineHeight = (int)(HEIGHT / data->prepWallDist);
-		//le debut et la fin de la ligne verticale
-		data->drawStart = -data->lineHeight / 2 + HEIGHT / 2;
-		if (data->drawStart < 0)
-			data->drawStart = 0; //securite pour pas sortie de l'ecran
-		data->drawEnd = data->lineHeight / 2 + HEIGHT /2;
-		if (data->drawEnd >= HEIGHT)
-			data->drawEnd = HEIGHT - 1; //securite pour pas sortie de l'ecran
-		double wallX; //where exactly the wall was hit
-		if (data->side == 0)
-			wallX = data->posY + data->prepWallDist * data->rayDirY;
-		else
-			wallX = data->posX + data->prepWallDist * data->rayDirX;
-		wallX -= floor((wallX));
-		int texture_nb;
-		
-		if (data->side == 0)
-		{
-			if (data->rayDirX > 0)
-				texture_nb = 0;
-			else
-				texture_nb = 1;
-		}
-		else
-		{
-			if (data->rayDirY > 0)
-				texture_nb = 2;
-			else
-				texture_nb = 3;
-		}
-		//x coordinate on the texture
-		int texX = (int)(wallX * (double)64);
-		if(data->side == 0 && data->rayDirX > 0)
-			texX = 64 - texX - 1;
-		if(data->side == 1 && data->rayDirY < 0)
-			texX = 64 - texX - 1;
-		int i = 0;
-		while (i < data->drawStart)
-		{
-			draw_pixel(&data->image, x, i, data->config.ceiling_color);
-			i++;
-		}
-		i = data->drawStart; //suppr
-		while (i < data->drawEnd)
-		{
-			int d = i * 256 - HEIGHT * 128 + data->lineHeight * 128;
-			int tex_y = ((d * 64) / data->lineHeight) / 256;
-			if (data->side == 1)
-				tex_y /= 2; //brightness
-			if (data->config.map_lines[data->mapY][data->mapX] == 'D' &&
-						door_is_open(data))
-				draw_pixel(&data->image, x, i, get_pixel(&data->door[1], texX, tex_y));
-			else if (data->config.map_lines[data->mapY][data->mapX] == 'D' &&
-						!door_is_open(data))
-				draw_pixel(&data->image, x, i, get_pixel(&data->door[0], texX, tex_y));
-			else
-				draw_pixel(&data->image, x, i, get_pixel(&data->wall[texture_nb], texX, tex_y));
-			i++;
-		}
-		i = data->drawEnd;
-		while (i < HEIGHT)
-		{
-			draw_pixel(&data->image, x, i, data->config.floor_color);
-			i++;
-		}
+			dda_loop(data);
+		configure_drawing(data, x);
+		draw_buffer(data, x, i, choose_texture(data));
 		x++;
 	}
-	for (int i = 0; i < data->config.monster_count; i++)
+	while (++i < data->config.monster_count)
 		draw_monster(data, data->config.monster[i]);
 	update_door(data);
 	update_monsters(data);

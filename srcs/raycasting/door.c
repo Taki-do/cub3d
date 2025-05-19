@@ -29,19 +29,18 @@ int	door_is_open(t_data *data)
 void	update_door(t_data *data)
 {
 	int		i;
-	double	dX;
-	double	dY;
+	double	dx;
+	double	dy;
 	double	dist;
 	t_door	*d;
 
 	i = -1;
 	while (++i < data->config.door_count)
 	{
-
 		d = &data->config.door[i];
-		dX = d->x - data->posX;
-		dY = d->y - data->posY;
-		dist = sqrt(dX * dX + dY * dY);
+		dx = d->x - data->posx;
+		dy = d->y - data->posy;
+		dist = sqrt(dx * dx + dy * dy);
 		if (dist < 2.0)
 		{
 			d->open = 1;
