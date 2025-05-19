@@ -23,38 +23,33 @@ int	check_element_line(char *line)
 		|| ft_strncmp(line, "C ", 2) == 0);
 }
 
-void	parse_texture(char *line, t_config *config)
+void    parse_texture(char *line, t_config *config)
 {
-	//int		i;
-	char	**tokens;
+    int        i;
+    char    **tokens;
 
-	//i = -1;
-	/*
-	while (line[++i])
-	{
-		if (!ft_isalpha(line[i]) && line[i] != '.'
-			&& line[i] != '/' && line[i] != ' ' && line[i] != '_' && line[i] != '\0')
-		{
-			printf("previous char %c\n", line[i - 1]);
-			error_exit("Invalid character in texture line.");
-		}
-	}
-		*/
-	tokens = ft_split(line, ' ');
-	if (!tokens || !tokens[0] || !tokens[1] || tokens[2])
-		error_exit("Invalid texture line format. Should be: XX xxxx.xpm");
-	if (ft_strcmp(tokens[0], "NO") == 0)
-		config->no_path = ft_strdup(tokens[1]);
-	else if (ft_strcmp(tokens[0], "SO") == 0)
-		config->so_path = ft_strdup(tokens[1]);
-	else if (ft_strcmp(tokens[0], "WE") == 0)
-		config->we_path = ft_strdup(tokens[1]);
-	else if (ft_strcmp(tokens[0], "EA") == 0)
-		config->ea_path = ft_strdup(tokens[1]);
-	else
-		error_exit("Unknown texture identifier."
-			"Can only be : NO, SO, WE and EA");
-	free_char_tab(tokens);
+    i = -1;
+    while (line[++i])
+    {
+        if (!ft_isalpha(line[i]) && !ft_isdigit(line[i]) && line[i] != '.'
+            && line[i] != '/' && line[i] != ' ' && line[i] != '_' && line[i] != '\r')
+            error_exit("Invalid character in texture line.");
+    }
+    tokens = ft_split(line, ' ');
+    if (!tokens || !tokens[0] || !tokens[1] || tokens[2])
+        error_exit("Invalid texture line format. Should be: XX xxxx.xpm");
+    if (ft_strcmp(tokens[0], "NO") == 0)
+        config->no_path = ft_strdup(tokens[1]);
+    else if (ft_strcmp(tokens[0], "SO") == 0)
+        config->so_path = ft_strdup(tokens[1]);
+    else if (ft_strcmp(tokens[0], "WE") == 0)
+        config->we_path = ft_strdup(tokens[1]);
+    else if (ft_strcmp(tokens[0], "EA") == 0)
+        config->ea_path = ft_strdup(tokens[1]);
+    else
+        error_exit("Unknown texture identifier."
+            "Can only be : NO, SO, WE and EA");
+    free_char_tab(tokens);
 }
 
 int	parse_rgb_component(char *s)

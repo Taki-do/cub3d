@@ -14,6 +14,7 @@
 
 void	load_texture(void *mlx, char *path, t_texture *tex)
 {
+	path = ft_strtrim(path, "\r");
 	tex->img = mlx_xpm_file_to_image(mlx, path, &tex->width, &tex->height);
 	if (!tex->img)
 		error_exit("Failed to load texture.");

@@ -16,7 +16,7 @@
 void	valid_char(char c)
 {
 	if (c != EMPTY && c != WALL && c != NORTH && c != SOUTH
-		&& c != EAST && c != WEST && c != SPACE && c != 'M' && c != 'D')
+		&& c != EAST && c != WEST && c != SPACE && c != 'M' && c != 'D' && c != '\r')
 		error_exit("Invalid character in map.");
 }
 
