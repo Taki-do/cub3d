@@ -16,7 +16,8 @@
 void	valid_char(char c, t_data *data)
 {
 	if (c != EMPTY && c != WALL && c != NORTH && c != SOUTH
-		&& c != EAST && c != WEST && c != SPACE && c != 'M' && c != 'D' && c != '\r')
+		&& c != EAST && c != WEST && c != SPACE && c != 'M' && c != 'D'
+		&& c != '\r')
 		error_exit("Invalid character in map.", data);
 }
 
@@ -25,14 +26,40 @@ int	is_player(char c)
 	return (c == NORTH || c == SOUTH || c == EAST || c == WEST);
 }
 
-int	is_monster(char c)
+void	validate_map3(t_config *config, int x, int y)
 {
-	return (c == 'M');
+	if (config->map_lines[y][x] == 'D')
+	{
+		config->door[config->door_count].x = x;
+		config->door[config->door_count].y = y;
+		config->door[config->door_count].frame = 0;
+		config->door[config->door_count].open = 0;
+		config->door_count++;
+	}
 }
 
-int	is_door(char c)
+void	validate_map2(t_config *config, int x, int y, int *player_found)
 {
-	return (c == 'D');
+	if (is_player(config->map_lines[y][x]))
+	{
+		if (*player_found)
+			error_exit("Multiple players found.", config->data);
+		config->player_x = x;
+		config->player_y = y;
+		config->player_dir = config->map_lines[y][x];
+		*player_found = 1;
+		config->map_lines[y][x] = '0';
+	}
+	if (config->map_lines[y][x] == 'M')
+	{
+		config->monster[config->monster_count].x = x;
+		config->monster[config->monster_count].y = y;
+		config->monster[config->monster_count].frame = 0;
+		config->monster[config->monster_count].hp = 1;
+		config->monster_count++;
+		config->map_lines[y][x] = '0';
+	}
+	validate_map3(config, x, y);
 }
 
 void	validate_map(t_config *config, int x, int y, int player_found)
@@ -47,33 +74,7 @@ void	validate_map(t_config *config, int x, int y, int player_found)
 		while (config->map_lines[y][x])
 		{
 			valid_char(config->map_lines[y][x], config->data);
-			if (is_player(config->map_lines[y][x]))
-			{
-				if (player_found)
-					error_exit("Multiple players found.", config->data);
-				config->player_x = x;
-				config->player_y = y;
-				config->player_dir = config->map_lines[y][x];
-				player_found = 1;
-				config->map_lines[y][x] = '0';
-			}
-			if (is_monster(config->map_lines[y][x]))
-			{
-				config->monster[config->monster_count].x = x;
-				config->monster[config->monster_count].y = y;
-				config->monster[config->monster_count].frame = 0;
-				config->monster[config->monster_count].hp = 1;
-				config->monster_count++;
-				config->map_lines[y][x] = '0';
-			}
-			if (is_door(config->map_lines[y][x]))
-			{
-				config->door[config->door_count].x = x;
-				config->door[config->door_count].y = y;
-				config->door[config->door_count].frame = 0;
-				config->door[config->door_count].open = 0;
-				config->door_count++;
-			}
+			validate_map2(config, x, y, &player_found);
 			x++;
 		}
 	}

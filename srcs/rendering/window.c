@@ -22,7 +22,7 @@ void	init_window(t_data *data, int width, int height)
 	if (!data->image.img)
 		error_exit("Failed to create image.", data);
 	data->image.addr = mlx_get_data_addr(data->image.img, &data->image.bpp,
-							&data->image.line_len, &data->image.endian);
+			&data->image.line_len, &data->image.endian);
 	if (!data->image.addr)
 		error_exit("Failed to get image data.", data);
 }

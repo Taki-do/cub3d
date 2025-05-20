@@ -46,6 +46,26 @@ void	free_config(t_config *config)
 	}
 }
 
+void	free_data2(t_data *data)
+{
+	if (data->door[0].img)
+		mlx_destroy_image(data->mlx, data->door[0].img);
+	if (data->door[1].img)
+		mlx_destroy_image(data->mlx, data->door[1].img);
+	if (data->win)
+		mlx_destroy_window(data->mlx, data->win);
+	if (data->mlx)
+		mlx_destroy_display(data->mlx);
+	if (&data->config)
+		free_config(&data->config);
+	if (data->mlx)
+		free(data->mlx);
+	if (data->tab)
+		free_char_tab(data->tab);
+	if (data->dup)
+		free_char_tab(data->dup);
+}
+
 void	free_data(t_data *data)
 {
 	int	i;
@@ -71,27 +91,7 @@ void	free_data(t_data *data)
 		mlx_destroy_image(data->mlx, data->shotgun[1].img);
 	if (data->shotgun[2].img)
 		mlx_destroy_image(data->mlx, data->shotgun[2].img);
-	if (data->door[0].img)
-		mlx_destroy_image(data->mlx, data->door[0].img);
-	if (data->door[1].img)
-		mlx_destroy_image(data->mlx, data->door[1].img);
-		
-	if (data->win)
-		mlx_destroy_window(data->mlx, data->win);
-		
-	if (data->mlx)
-		mlx_destroy_display(data->mlx);
-	if (&data->config)
-		free_config(&data->config);
-	if (data->mlx)
-		free(data->mlx);
-	if (data->tab)
-		free_char_tab(data->tab);
-	if (data->dup)
-	{
-		printf("\n\nsegfault de ces morts\n\n");
-		free_char_tab(data->dup);
-	}
+	free_data2(data);
 }
 
 int	close_window(t_data *data)

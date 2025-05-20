@@ -40,9 +40,9 @@ void	init_data(t_data *data)
 int	has_tab(char *str)
 {
 	int	i;
-	
+
 	i = -1;
-	while(str[++i])
+	while (str[++i])
 	{
 		if (str[i] == '\t')
 			return (1);

@@ -23,7 +23,8 @@ void	char_check_rgb(char *str, t_data *data)
 		if (str[i] == '\t')
 			error_exit("Tab is not valid in RGB range.", data);
 		if (!ft_isdigit(str[i]) && str[i] != 'F'
-			&& str[i] != 'C' && str[i] != ' ' && str[i] != ',' && str[i] != '\r')
+			&& str[i] != 'C' && str[i] != ' ' && str[i] != ','
+			&& str[i] != '\r')
 			error_exit("Invalid caracter in floor/ceiling lines.", data);
 	}
 }

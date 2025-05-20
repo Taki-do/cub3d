@@ -21,7 +21,8 @@ static void	process_line(t_list **line_list, char *line, int *line_count)
 	(*line_count)++;
 }
 
-char	**read_cub_map(const char *filename, int line_count, int i, t_data *data)
+char	**read_cub_map(const char *filename, int line_count, int i
+		, t_data *data)
 {
 	int		fd;
 	char	*line;
@@ -105,7 +106,8 @@ void	copy_map_lines(char **map_start, t_config *config,
 	}
 	config->map_height = height;
 	config->map_width = max_width;
-	config->map_lines = ft_secure_malloc((height + 1) * sizeof(char *), config->data);
+	config->map_lines = ft_secure_malloc((height + 1) * sizeof(char *),
+			config->data);
 	i = -1;
 	while (++i < height)
 		config->map_lines[i] = ft_strdup(map_start[i]);
