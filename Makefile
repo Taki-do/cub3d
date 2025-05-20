@@ -45,6 +45,8 @@ OBJ := $(OBJ:.c=.o)
 
 all: $(NAME)
 
+bonus: all
+
 $(NAME): $(LIBFT_LIB) $(MLX_LIB) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_LIB) $(MLX_FLAGS) -o $(NAME)
 
