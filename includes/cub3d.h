@@ -47,6 +47,23 @@ typedef struct s_monster
 	int		frame_timer;
 }	t_monster;
 
+typedef struct s_draw
+{
+	double	invDet;
+	double	transformx;
+	double	transformy;
+	int 	spriteScreenx;
+	int 	spriteheight;
+	int		stripe;
+	int		texx;
+	int 	d;
+	int 	texy;
+	int 	color;
+	double	dx;
+	double	dy;
+	double	dist;
+}	t_draw;
+
 struct s_data;
 
 typedef struct s_config

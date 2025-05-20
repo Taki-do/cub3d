@@ -12,80 +12,98 @@
 
 #include "../../includes/cub3d.h"
 
-void draw_monster(t_data *data, t_monster m)
+void	draw_monster3(t_data *data, t_monster m, t_draw draw)
 {
-	double spriteX = m.x - data->posx;
-	double spriteY = m.y - data->posy;
-	double invDet = 1.0 / (data->planex * data->diry - data->dirx * data->planey);
-	double transformX = invDet * (data->diry * spriteX - data->dirx * spriteY);
-	double transformY = invDet * (-data->planey * spriteX + data->planex * spriteY);
+	int	y;
 
-	int spriteScreenX = (int)((WIDTH / 2) * (1 + transformX / transformY));
-    
-	int spriteHeight = abs((int)(HEIGHT / transformY));
-	int drawStartY = -spriteHeight / 2 + HEIGHT / 2;
-	int drawEndY = spriteHeight / 2 + HEIGHT / 2;
-    
-	int spriteWidth = spriteHeight; // carré
-
-	int drawStartX = -spriteWidth / 2 + spriteScreenX;
-	int drawEndX = spriteWidth / 2 + spriteScreenX;
-
-	for (int stripe = drawStartX; stripe < drawEndX; stripe++)
+	y = -draw.spriteheight / 2 + HEIGHT / 2 - 1;
+	while (++y < draw.spriteheight / 2 + HEIGHT / 2)
 	{
-        if (transformY > 0 && stripe >= 0 && stripe < WIDTH && transformY < data->zbuffer[stripe])
-        {
-            int texX = (stripe - (-spriteWidth / 2 + spriteScreenX)) * 64 / spriteWidth;
-    
-            if (transformY > 0 && stripe >= 0 && stripe < WIDTH)
-            {
-                for (int y = drawStartY; y < drawEndY; y++)
-                {
-                    int d = y * 256 - HEIGHT * 128 + spriteHeight * 128;
-                    int texY = ((d * 64) / spriteHeight) / 256;
-                    int color;
-                    if (m.hp <= 0)
-                        color = get_pixel(&data->monster_texture[2], texX, texY);
-                    else
-                        color = get_pixel(&data->monster_texture[m.frame], texX, texY);
-                    //Ne pas dessiner transparent
-                    if (color != 0x000000)
-                        draw_pixel(&data->image, stripe, y, color);
-                }
-            }
-        }
+		draw.d = y * 256 - HEIGHT * 128 + draw.spriteheight * 128;
+		draw.texy = ((draw.d * 64) / draw.spriteheight) / 256;
+		if (m.hp <= 0)
+			draw.color = get_pixel(&data->monster_texture[2], draw.texx,
+					draw.texy);
+		else
+			draw.color = get_pixel(&data->monster_texture[m.frame], draw.texx,
+					draw.texy);
+		if (draw.color != 0x000000)
+			draw_pixel(&data->image, draw.stripe, y, draw.color);
 	}
 }
 
-void check_monster_hit(t_data *data)
+void	draw_monster2(t_data *data, t_monster m, t_draw draw)
 {
-    for (int i = 0; i < data->config.monster_count; i++)
-    {
-        t_monster *m = &data->config.monster[i];
-
-        if (m->hp <= 0)
-            return ;
-
-        double spriteX = m->x - data->posx;
-        double spriteY = m->y - data->posy;
-
-        double invDet = 1.0 / (data->planex * data->diry - data->dirx * data->planey);
-
-        double transformX = invDet * (data->diry * spriteX - data->dirx * spriteY);
-        double transformY = invDet * (-data->planey * spriteX + data->planex * spriteY);
-
-        if (transformY <= 0)
-            return ;
-
-        int spriteScreenX = (int)((WIDTH / 2) * (1 + transformX / transformY));
-
-        int tolerance = 10;
-
-        if (spriteScreenX > WIDTH / 2 - tolerance && spriteScreenX < WIDTH / 2 + tolerance)
-        {
-            if (transformY < data->zbuffer[spriteScreenX])
-                m->hp -= 1;
-        }
-    }
+	draw.stripe = -draw.spriteheight / 2 + draw.spriteScreenx - 1;
+	while (++draw.stripe < draw.spriteheight / 2 + draw.spriteScreenx)
+	{
+		if (draw.transformy > 0 && draw.stripe >= 0 && draw.stripe < WIDTH
+			&& draw.transformy < data->zbuffer[draw.stripe])
+		{
+			draw.texx = (draw.stripe - (-draw.spriteheight / 2
+						+ draw.spriteScreenx))
+				* 64 / draw.spriteheight;
+			if (draw.transformy > 0 && draw.stripe >= 0 && draw.stripe < WIDTH)
+				draw_monster3(data, m, draw);
+		}
+	}
 }
 
+void	draw_monster(t_data *data, t_monster m)
+{
+	t_draw	draw;
+
+	draw.invDet = 1.0 / (data->planex * data->diry
+			- data->dirx * data->planey);
+	draw.transformx = draw.invDet * (data->diry
+			* (m.x - data->posx) - data->dirx * (m.y - data->posy));
+	draw.transformy = draw.invDet * (-data->planey
+			* (m.x - data->posx) + data->planex * (m.y - data->posy));
+	draw.spriteScreenx = (int)((WIDTH / 2)
+			* (1 + draw.transformx / draw.transformy));
+	draw.spriteheight = abs((int)(HEIGHT / draw.transformy));
+	draw_monster2(data, m, draw);
+}
+
+void	check_zbuffer(t_data *data, t_monster *m, int transformx,
+		int transformy)
+{
+	int	spritescreenx;
+	int	tolerance;
+
+	tolerance = 10;
+	if (transformy <= 0)
+		return ;
+	spritescreenx = (int)((WIDTH / 2) * (1 + transformx / transformy));
+	if (spritescreenx > WIDTH / 2 - tolerance
+		&& spritescreenx < WIDTH / 2 + tolerance)
+	{
+		if (transformy < data->zbuffer[spritescreenx])
+			m->hp -= 1;
+	}
+}
+
+void	check_monster_hit(t_data *data)
+{
+	t_monster	*m;
+	double		invdet;
+	double		transformx;
+	double		transformy;
+	int			i;
+
+	i = -1;
+	while (++i < data->config.monster_count)
+	{
+		m = &data->config.monster[i];
+		if (m->hp <= 0)
+			return ;
+		invdet = 1.0 / (data->planex * data->diry - data->dirx * data->planey);
+		transformx = invdet * (data->diry
+				* (m->x - data->posx) - data->dirx * (m->y - data->posy));
+		transformy = invdet * (-data->planey
+				* (m->x - data->posx) + data->planex * (m->y - data->posy));
+		if (transformy <= 0)
+			return ;
+		check_zbuffer(data, m, transformx, transformy);
+	}
+}

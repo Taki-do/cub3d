@@ -13,168 +13,93 @@
 #include "../../includes/cub3d.h"
 #include "../includes/utils.h"
 
-void	update_monsters(t_data *data)
+int	control_input4(t_data *data, double rotspeed)
 {
-	double	speed = 0.01;
-	for (int i = 0; i < data->config.monster_count; i++)
+	double	olddirx;
+	double	oldplanex;
+
+	if (data->keys.right)
 	{
-		t_monster *m = &data->config.monster[i];
-		if (m->hp > 0)
-		{
-			double dx = data->posx - m->x;
-			double dy = data->posy - m->y;
-			double dist = sqrt(dx * dx + dy * dy);
-			m->frame_timer++;
-			if (m->frame_timer > 100)
-			{
-				m->frame = (m->frame + 1) % 2;
-				m->frame_timer = 0;
-			}
-			if (dist > 1)
-			{
-				double vx = dx / dist;
-				double vy = dy / dist;
-				if (data->config.map_lines[(int)(m->y)][(int)(m->x + vx * speed)] == '0')
-					m->x += vx * speed;
-				if (data->config.map_lines[(int)(m->y + vy * speed)][(int)(m->x)] == '0')
-					m->y += vy * speed;
-			}
-		}
+		olddirx = data->dirx;
+		data->dirx = data->dirx * cos(-rotspeed) - data->diry * sin(-rotspeed);
+		data->diry = olddirx
+			* sin(-rotspeed) + data->diry * cos(-rotspeed);
+		oldplanex = data->planex;
+		data->planex = data->planex
+			* cos(-rotspeed) - data->planey * sin(-rotspeed);
+		data->planey = oldplanex
+			* sin(-rotspeed) + data->planey * cos(-rotspeed);
 	}
-}
-
-int	mouse_press(int button, int x, int y, t_data *data)
-{
-	(void)x;
-	(void)y;
-	if (button == 1)
-		shoot(data);
+	render(data);
 	return (0);
 }
 
-int	on_press(int keycode, t_data *data)
+int	control_input3(t_data *data, double rotspeed)
 {
-	if (keycode == 119)
-		data->keys.w = 1;
-	if (keycode == 115)
-		data->keys.s = 1;
-	if (keycode == 100)
-		data->keys.d = 1;
-	if (keycode == 97)
-		data->keys.a = 1;
-	if (keycode == 65361)
-		data->keys.left = 1;
-	if (keycode == 65363)
-		data->keys.right = 1;
-	if (keycode == 65307)
+	double	olddirx;
+	double	oldplanex;
+
+	if (data->keys.left)
 	{
-		free_data(data);
-		exit(0);
+		olddirx = data->dirx;
+		data->dirx = data->dirx * cos(rotspeed) - data->diry * sin(rotspeed);
+		data->diry = olddirx * sin(rotspeed) + data->diry * cos(rotspeed);
+		oldplanex = data->planex;
+		data->planex = data->planex
+			* cos(rotspeed) - data->planey * sin(rotspeed);
+		data->planey = oldplanex
+			* sin(rotspeed) + data->planey * cos(rotspeed);
 	}
-	return (0);
+	return (control_input4(data, rotspeed));
 }
 
-int	on_release(int keycode, t_data *data)
+int	control_input2(t_data *data, double movespeed, double rotspeed)
 {
-	if (keycode == 119)
-		data->keys.w = 0;
-	if (keycode == 115)
-		data->keys.s = 0;
-	if (keycode == 100)
-		data->keys.d = 0;
-	if (keycode == 97)
-		data->keys.a = 0;
-	if (keycode == 65361)
-		data->keys.left = 0;
-	if (keycode == 65363)
-		data->keys.right = 0;
-	return (0);
+	if (data->keys.d)
+	{
+		if (data->config.map_lines[(int)(data->posy)]
+			[(int)(data->posx + data->planex * movespeed)] == '0')
+			data->posx += data->planex * movespeed;
+		if (data->config.map_lines[(int)(data->posy + data->planey * movespeed)]
+			[(int)(data->posx)] == '0')
+			data->posy += data->planey * movespeed;
+	}
+	if (data->keys.a)
+	{
+		if (data->config.map_lines[(int)(data->posy)]
+			[(int)(data->posx - data->planex * movespeed)] == '0')
+			data->posx -= data->planex * movespeed;
+		if (data->config.map_lines[(int)(data->posy - data->planey * movespeed)]
+			[(int)(data->posx)] == '0')
+			data->posy -= data->planey * movespeed;
+	}
+	return (control_input3(data, rotspeed));
 }
 
 int	control_input(t_data *data)
 {
-	double moveSpeed = 0.03f;
-	double rotSpeed = 0.01f;
+	double	movespeed;
+	double	rotspeed;
+
+	movespeed = 0.03f;
+	rotspeed = 0.01f;
 	if (data->keys.w)
 	{
-		if(data->config.map_lines[(int)(data->posy)][(int)(data->posx + data->dirx * moveSpeed)] == '0')
-			data->posx += data->dirx * moveSpeed;
-		if(data->config.map_lines[(int)(data->posy + data->diry * moveSpeed)][(int)(data->posx)] == '0')
-			data->posy += data->diry * moveSpeed;
+		if (data->config.map_lines[(int)(data->posy)]
+			[(int)(data->posx + data->dirx * movespeed)] == '0')
+			data->posx += data->dirx * movespeed;
+		if (data->config.map_lines[(int)(data->posy + data->diry * movespeed)]
+			[(int)(data->posx)] == '0')
+			data->posy += data->diry * movespeed;
 	}
-
 	if (data->keys.s)
 	{
-		if(data->config.map_lines[(int)(data->posy)][(int)(data->posx - data->dirx * moveSpeed)] == '0')
-			data->posx -= data->dirx * moveSpeed;
-		if(data->config.map_lines[(int)(data->posy - data->diry * moveSpeed)][(int)(data->posx)] == '0')
-			data->posy -= data->diry * moveSpeed;
+		if (data->config.map_lines[(int)(data->posy)]
+			[(int)(data->posx - data->dirx * movespeed)] == '0')
+			data->posx -= data->dirx * movespeed;
+		if (data->config.map_lines[(int)(data->posy - data->diry * movespeed)]
+			[(int)(data->posx)] == '0')
+			data->posy -= data->diry * movespeed;
 	}
-	if (data->keys.d)
-	{
-		if(data->config.map_lines[(int)(data->posy)][(int)(data->posx + data->planex * moveSpeed)] == '0')
-			data->posx += data->planex * moveSpeed;
-		if(data->config.map_lines[(int)(data->posy + data->planey * moveSpeed)][(int)(data->posx)] == '0')
-			data->posy += data->planey * moveSpeed;
-	}
-	if (data->keys.a)
-	{
-		if(data->config.map_lines[(int)(data->posy)][(int)(data->posx - data->planex * moveSpeed)] == '0')
-			data->posx -= data->planex * moveSpeed;
-		if(data->config.map_lines[(int)(data->posy - data->planey * moveSpeed)][(int)(data->posx)] == '0')
-			data->posy -= data->planey * moveSpeed;
-			
-	}
-	if (data->keys.left)
-	{
-		double olddirx = data->dirx;
-		data->dirx = data->dirx * cos(rotSpeed) - data->diry * sin(rotSpeed);
-		data->diry = olddirx * sin(rotSpeed) + data->diry * cos(rotSpeed);
-		double oldplanex = data->planex;
-		data->planex = data->planex * cos(rotSpeed) - data->planey * sin(rotSpeed);
-		data->planey = oldplanex * sin(rotSpeed) + data->planey * cos(rotSpeed);
-	}
-	if (data->keys.right)
-	{
-		double olddirx = data->dirx;
-		data->dirx = data->dirx * cos(-rotSpeed) - data->diry * sin(-rotSpeed);
-		data->diry = olddirx * sin(-rotSpeed) + data->diry * cos(-rotSpeed);
-		double oldplanex = data->planex;
-		data->planex = data->planex * cos(-rotSpeed) - data->planey * sin(-rotSpeed);
-		data->planey = oldplanex * sin(-rotSpeed) + data->planey * cos(-rotSpeed);
-	}
-	render(data);
-	return (0);
-}
-
-int	mouse_move(int x, int y, t_data *data)
-{
-	static int	last_x = -1;
-	double 		rotSpeed = 0.03f;
-	(void)y;
-
-	if (last_x == 1)
-		last_x = x;
-	int delta_x = x - last_x;
-	if (delta_x < 0)
-	{
-		double olddirx = data->dirx;
-		data->dirx = data->dirx * cos(rotSpeed) - data->diry * sin(rotSpeed);
-		data->diry = olddirx * sin(rotSpeed) + data->diry * cos(rotSpeed);
-		double oldplanex = data->planex;
-		data->planex = data->planex * cos(rotSpeed) - data->planey * sin(rotSpeed);
-		data->planey = oldplanex * sin(rotSpeed) + data->planey * cos(rotSpeed);
-	}
-	if (delta_x > 0)
-	{
-		double olddirx = data->dirx;
-		data->dirx = data->dirx * cos(-rotSpeed) - data->diry * sin(-rotSpeed);
-		data->diry = olddirx * sin(-rotSpeed) + data->diry * cos(-rotSpeed);
-		double oldplanex = data->planex;
-		data->planex = data->planex * cos(-rotSpeed) - data->planey * sin(-rotSpeed);
-		data->planey = oldplanex * sin(-rotSpeed) + data->planey * cos(-rotSpeed);
-	}
-	last_x = x;
-	render(data);
-	return (0);
+	return (control_input2(data, movespeed, rotspeed));
 }
