@@ -28,7 +28,7 @@ void	free_char_tab(char **tab);
 void	free_config(t_config *config);
 void	free_data(t_data *data);
 void	init_data(t_data *data);
-int	    close_window(t_data *data);
+int		close_window(t_data *data);
 
 /* ************************************************************************** */
 /*                                CHAR HANDLING                               */

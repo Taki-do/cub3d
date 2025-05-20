@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HOOKS_H
-# define HOOKS_H
+#ifndef HOOK_H
+# define HOOK_H
 
 # define KEY_ESC 65307
 # define KEY_W 119
@@ -25,4 +25,3 @@ int	take_input(int keycode, t_data *data);
 int	exit_game(t_data *data);
 
 #endif
-

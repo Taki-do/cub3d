@@ -32,16 +32,16 @@
 
 typedef struct s_door
 {
-	double 	x;
-	double 	y;
+	double	x;
+	double	y;
 	int		frame;
 	int		open;
 }	t_door;
 
 typedef struct s_monster
 {
-	double 	x;
-	double 	y;
+	double	x;
+	double	y;
 	int		hp;
 	int		frame;
 	int		frame_timer;
@@ -49,44 +49,43 @@ typedef struct s_monster
 
 typedef struct s_draw
 {
-	double	invDet;
+	double	invdet;
 	double	transformx;
 	double	transformy;
-	int 	spriteScreenx;
-	int 	spriteheight;
+	int		spritescreenx;
+	int		spriteheight;
 	int		stripe;
 	int		texx;
-	int 	d;
-	int 	texy;
-	int 	color;
+	int		d;
+	int		texy;
+	int		color;
 	double	dx;
 	double	dy;
 	double	dist;
 }	t_draw;
 
-struct s_data;
+struct	s_data;
 
 typedef struct s_config
 {
-	char	*no_path;
-	char	*so_path;
-	char	*we_path;
-	char	*ea_path;
-	int		floor_color;
-	int		ceiling_color;
-	char	**map_lines;
-	int		map_height;
-	int		map_width;
-	int		player_x;
-	int		player_y;
-	char	player_dir;
-	int		monster_count;
-	int		door_count;
-	struct s_data		*data;
-	t_door		door[10];
-	t_monster	monster[50];
+	char			*no_path;
+	char			*so_path;
+	char			*we_path;
+	char			*ea_path;
+	int				floor_color;
+	int				ceiling_color;
+	char			**map_lines;
+	int				map_height;
+	int				map_width;
+	int				player_x;
+	int				player_y;
+	char			player_dir;
+	int				monster_count;
+	int				door_count;
+	struct s_data	*data;
+	t_door			door[10];
+	t_monster		monster[50];
 }	t_config;
-
 
 typedef struct s_texture
 {
@@ -103,13 +102,13 @@ typedef struct s_texture
 
 typedef struct s_keys
 {
-    int w;
-    int a;
-    int s;
-    int d;
-    int left;
-    int right;
-}   t_keys;
+	int	w;
+	int	a;
+	int	s;
+	int	d;
+	int	left;
+	int	right;
+}	t_keys;
 
 typedef struct s_data
 {
@@ -119,7 +118,7 @@ typedef struct s_data
 	t_texture	shotgun[3];
 	t_texture	door[2];
 	t_config	config;
-    t_keys      keys;
+	t_keys		keys;
 	int			shotgun_frame;
 	int			shotgun_frame_timer;
 	char		**tab;
@@ -135,7 +134,7 @@ typedef struct s_data
 	double		camerax;
 	double		raydirx;
 	double		raydiry;
-	double		wallX;
+	double		wallx;
 	int			mapx;
 	int			mapy;
 	double		sidedistx;
@@ -154,10 +153,10 @@ typedef struct s_data
 	int			last_mouse_x;
 	int			ignore_next_mouse;
 	double		zbuffer[WIDTH];
-}   t_data;
+}	t_data;
 
 //[textures.c]
-int     get_pixel(t_texture *texture, int x, int y);
+int		get_pixel(t_texture *texture, int x, int y);
 void	draw_pixel(t_texture *texture, int x, int y, int color);
 
 //[raycasting/cub3d.c]
@@ -169,26 +168,26 @@ void	init_keys(t_data *data);
 void	init_position(t_data *data, char dir);
 
 //[raycasting/input.c]
-int	control_input(t_data *data);
-int	on_release(int keycode, t_data *data);
-int	on_press(int keycode, t_data *data);
-int	mouse_move(int x, int y, t_data *data);
-int	mouse_press(int button, int x, int y, t_data *data);
+int		control_input(t_data *data);
+int		on_release(int keycode, t_data *data);
+int		on_press(int keycode, t_data *data);
+int		mouse_move(int x, int y, t_data *data);
+int		mouse_press(int button, int x, int y, t_data *data);
 
 void	update_monsters(t_data *data);
 
 //[raycasting/monster.c]
-void draw_monster(t_data *data, t_monster m);
-void check_monster_hit(t_data *data);
+void	draw_monster(t_data *data, t_monster m);
+void	check_monster_hit(t_data *data);
 
 //[raycasting/shotgun.c]
-int	 shoot(t_data *data);
-void update_gun(t_data *data);
-void draw_gun(t_data *data, int scale);
+int		shoot(t_data *data);
+void	update_gun(t_data *data);
+void	draw_gun(t_data *data, int scale);
 
 //[raycasting/door.c]
-void    update_door(t_data *data);
-int door_is_open(t_data *data);
+void	update_door(t_data *data);
+int		door_is_open(t_data *data);
 
 //[rendering/minimap.c]
 void	draw_minimap(t_data *data);

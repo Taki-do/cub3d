@@ -34,14 +34,14 @@ void	draw_monster3(t_data *data, t_monster m, t_draw draw)
 
 void	draw_monster2(t_data *data, t_monster m, t_draw draw)
 {
-	draw.stripe = -draw.spriteheight / 2 + draw.spriteScreenx - 1;
-	while (++draw.stripe < draw.spriteheight / 2 + draw.spriteScreenx)
+	draw.stripe = -draw.spriteheight / 2 + draw.spritescreenx - 1;
+	while (++draw.stripe < draw.spriteheight / 2 + draw.spritescreenx)
 	{
 		if (draw.transformy > 0 && draw.stripe >= 0 && draw.stripe < WIDTH
 			&& draw.transformy < data->zbuffer[draw.stripe])
 		{
 			draw.texx = (draw.stripe - (-draw.spriteheight / 2
-						+ draw.spriteScreenx))
+						+ draw.spritescreenx))
 				* 64 / draw.spriteheight;
 			if (draw.transformy > 0 && draw.stripe >= 0 && draw.stripe < WIDTH)
 				draw_monster3(data, m, draw);
@@ -53,13 +53,13 @@ void	draw_monster(t_data *data, t_monster m)
 {
 	t_draw	draw;
 
-	draw.invDet = 1.0 / (data->planex * data->diry
+	draw.invdet = 1.0 / (data->planex * data->diry
 			- data->dirx * data->planey);
-	draw.transformx = draw.invDet * (data->diry
+	draw.transformx = draw.invdet * (data->diry
 			* (m.x - data->posx) - data->dirx * (m.y - data->posy));
-	draw.transformy = draw.invDet * (-data->planey
+	draw.transformy = draw.invdet * (-data->planey
 			* (m.x - data->posx) + data->planex * (m.y - data->posy));
-	draw.spriteScreenx = (int)((WIDTH / 2)
+	draw.spritescreenx = (int)((WIDTH / 2)
 			* (1 + draw.transformx / draw.transformy));
 	draw.spriteheight = abs((int)(HEIGHT / draw.transformy));
 	draw_monster2(data, m, draw);

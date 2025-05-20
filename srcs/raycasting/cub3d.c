@@ -27,10 +27,10 @@ void	configure_drawing(t_data *data, int x)
 	if (data->drawend >= HEIGHT)
 		data->drawend = HEIGHT - 1;
 	if (data->side == 0)
-		data->wallX = data->posy + data->prepwalldist * data->raydiry;
+		data->wallx = data->posy + data->prepwalldist * data->raydiry;
 	else
-		data->wallX = data->posx + data->prepwalldist * data->raydirx;
-	data->wallX -= floor((data->wallX));
+		data->wallx = data->posx + data->prepwalldist * data->raydirx;
+	data->wallx -= floor((data->wallx));
 }
 
 int	choose_texture(t_data *data)
@@ -51,7 +51,7 @@ int	choose_texture(t_data *data)
 		else
 			nb = 3;
 	}
-	data->texx = (int)(data->wallX * (double)64);
+	data->texx = (int)(data->wallx * (double)64);
 	if (data->side == 0 && data->raydirx > 0)
 		data->texx = 64 - data->texx - 1;
 	if (data->side == 1 && data->raydiry < 0)

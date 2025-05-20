@@ -27,17 +27,18 @@
 /*                                    FILE                                    */
 /* ************************************************************************** */
 int		check_cub_extension(char *filename);
-char	**read_cub_map(const char *filename, int line_count, int i, t_data *data);
+char	**read_cub_map(const char *filename, int line_count,
+			int i, t_data *data);
 int		check_empty_line(char *line);
 void	parse_config(char **lines, t_config *config, int i, int elements_count);
-void	copy_map_lines(char **map_start, t_config *config, int height, int max_width);
+void	copy_map_lines(char **map_start, t_config *config, int height,
+			int max_width);
 
 /* ************************************************************************** */
 /*                                  ELEMENTS                                  */
 /* ************************************************************************** */
 int		check_element_line(char *line);
 void	parse_texture(char *line, t_config *config);
-//int		parse_rgb_component(char *s);
 int		combine_rgb(int r, int g, int b);
 void	parse_color_line(char *line, t_config *config);
 
@@ -61,6 +62,5 @@ void	validate_map(t_config *config, int x, int y, int player_found);
 /* ************************************************************************** */
 void	char_check_rgb(char *str, t_data *data);
 int		process_element(char *line, t_config *config);
-
 
 #endif
