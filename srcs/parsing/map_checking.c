@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 15:40:58 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/19 16:09:45 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/20 14:07:15 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	validate_map3(t_config *config, int x, int y)
 		config->door[config->door_count].frame = 0;
 		config->door[config->door_count].open = 0;
 		config->door_count++;
+		if (config->door_count > 10)
+			error_exit("Limit is set to 10 doors", config->data);
 	}
 }
 
@@ -57,6 +59,8 @@ void	validate_map2(t_config *config, int x, int y, int *player_found)
 		config->monster[config->monster_count].frame = 0;
 		config->monster[config->monster_count].hp = 1;
 		config->monster_count++;
+		if (config->monster_count > 50)
+			error_exit("Limit is set to 50 monsters", config->data);
 		config->map_lines[y][x] = '0';
 	}
 	validate_map3(config, x, y);

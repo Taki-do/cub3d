@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 13:07:21 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/19 15:30:56 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:42:54 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	*ft_secure_malloc(size_t bytes, t_data *data)
 
 void	error_exit(char *msg, t_data *data)
 {
-	free_data(data);
+	if (data)
+		free_data(data);
 	ft_putstr_fd("Error\n", 2);
 	ft_putstr_fd(msg, 2);
 	ft_putstr_fd("\n", 2);

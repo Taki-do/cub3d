@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 19:07:09 by taomalbe          #+#    #+#             */
-/*   Updated: 2025/05/16 11:53:30 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:50:15 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ void	init_position(t_data *data, char dir)
 	{
 		data->dirx = 0;
 		data->diry = -1;
-		data->planex = 0.66;
+		data->planex = -0.66;
 		data->planey = 0;
 	}
 	else if (dir == 'S')
 	{
 		data->dirx = 0;
 		data->diry = 1;
-		data->planex = -0.66;
+		data->planex = 0.66;
 		data->planey = 0;
 	}
 	else if (dir == 'E')

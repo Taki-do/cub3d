@@ -6,7 +6,7 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:13:28 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/19 15:39:00 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:57:00 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 /*                                    FILE                                    */
 /* ************************************************************************** */
 int		check_cub_extension(char *filename);
+int		check_xpm_extension(char *filename);
 char	**read_cub_map(const char *filename, int line_count,
 			int i, t_data *data);
 int		check_empty_line(char *line);
