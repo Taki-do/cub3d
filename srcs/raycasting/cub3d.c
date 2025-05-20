@@ -118,7 +118,7 @@ int	render(t_data *data)
 	update_monsters(data);
 	update_gun(data);
 	draw_gun(data, 3);
-	mlx_put_image_to_window(data->mlx, data->win, data->image.img, 0, 0);
 	draw_minimap(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->image.img, 0, 0);
 	return (0);
 }
