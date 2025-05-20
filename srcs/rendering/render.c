@@ -6,16 +6,22 @@
 /*   By: taomalbe <taomalbe@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 13:02:50 by tboulogn          #+#    #+#             */
-/*   Updated: 2025/05/19 15:56:58 by taomalbe         ###   ########.fr       */
+/*   Updated: 2025/05/20 14:01:04 by taomalbe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/mlx_utils.h"
+#include "../../includes/parsing.h"
 #include "../../includes/utils.h"
 
 void	load_texture(void *mlx, char *path, t_texture *tex, t_data *data)
 {
 	path = ft_strtrim(path, "\r");
+	if (check_xpm_extension(path))
+	{
+		free(path);
+		error_exit("Texture need to be .xpm", data);
+	}
 	tex->img = mlx_xpm_file_to_image(mlx, path, &tex->width, &tex->height);
 	if (!tex->img)
 	{
